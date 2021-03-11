@@ -1,4 +1,4 @@
-// PUCRS - Escola Politécnica - Sistemas Operacionais
+package vm;// PUCRS - Escola Politécnica - Sistemas Operacionais
 // Prof. Fernando Dotti
 // Código fornecido como parte da solução do projeto de Sistemas Operacionais
 //
@@ -7,7 +7,7 @@
 
 public class Sistema {
 	public VM vm;
-    public Sistema(){   // a VM com tratamento de interrupções
+    public Sistema(){   // a vm.VM com tratamento de interrupções
 		 vm = new VM();
 	}
 	public static void main(String args[]) {

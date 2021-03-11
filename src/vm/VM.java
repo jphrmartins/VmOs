@@ -1,5 +1,10 @@
-// ------------------- V M  - constituida de CPU e MEMORIA -----------------------------------------------
-// -------------------------- atributos e construcao da VM -----------------------------------------------
+package vm;
+
+import vm.CPU;
+import vm.Opcode;
+
+// ------------------- V M  - constituida de vm.CPU e MEMORIA -----------------------------------------------
+// -------------------------- atributos e construcao da vm.VM -----------------------------------------------
 public class VM {
     public int tamMem;
     public Word[] m;

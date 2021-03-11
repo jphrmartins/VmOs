@@ -1,3 +1,5 @@
+package vm;
+
 // -------------------------------------------  classes e funcoes auxiliares
 public class Aux {
     public void dump(Word w) {
