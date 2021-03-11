@@ -1,13 +1,11 @@
 // ------------------- V M  - constituida de CPU e MEMORIA -----------------------------------------------
 // -------------------------- atributos e construcao da VM -----------------------------------------------
 public class VM {
-    private final Sistema sistema;
     public int tamMem;
     public Word[] m;
     public CPU cpu;
 
-    public VM(Sistema sistema) {
-        this.sistema = sistema;   // vm deve ser configurada com endereço de tratamento de interrupcoes
+    public VM() {
         // memória
         tamMem = 1024;
         m = new Word[tamMem]; // m ee a memoria

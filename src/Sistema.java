@@ -8,7 +8,7 @@
 public class Sistema {
 	public VM vm;
     public Sistema(){   // a VM com tratamento de interrupções
-		 vm = new VM(this);
+		 vm = new VM();
 	}
 	public static void main(String args[]) {
 		Sistema s = new Sistema();
@@ -18,7 +18,7 @@ public class Sistema {
 
 	public void test1(){
 		Aux aux = new Aux();
-		Word[] p = new Programas(this).fibonacci10;
+		Word[] p = new Programas().fibonacci10;
 		aux.carga(p, vm.m);
 		vm.cpu.setContext(0);
 		System.out.println("---------------------------------- programa carregado ");
@@ -30,7 +30,7 @@ public class Sistema {
 
 	public void test2(){
 		Aux aux = new Aux();
-		Word[] p = new Programas(this).progMinimo;
+		Word[] p = new Programas().progMinimo;
 		aux.carga(p, vm.m);
 		vm.cpu.setContext(0);
 		System.out.println("---------------------------------- programa carregado ");

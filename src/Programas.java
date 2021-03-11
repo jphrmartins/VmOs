@@ -1,6 +1,5 @@
 //  -------------------------------------------- programas aa disposicao para copiar na memoria (vide aux.carga)
 public class Programas {
-    private final Sistema sistema;
     public Word[] progMinimo = new Word[]{
             new Word(Opcode.LDI, 0, -1, 999),
             new Word(Opcode.STD, 0, -1, 10),
@@ -28,8 +27,4 @@ public class Programas {
             new Word(Opcode.SUB, 7, 0, -1),
             new Word(Opcode.JMPIG, 6, 7, -1),
             new Word(Opcode.STOP, -1, -1, -1)};
-
-    public Programas(Sistema sistema) {
-        this.sistema = sistema;
-    }
 }
