@@ -17,27 +17,27 @@ public class Sistema {
 	}
 
 	public void test1(){
-		Aux aux = new Aux();
+		MemoryHelper memoryHelper = new MemoryHelper();
 		Word[] p = new Programas().fibonacci10;
-		aux.carga(p, vm.m);
+		memoryHelper.carga(p, vm.m);
 		vm.cpu.setContext(0);
 		System.out.println("---------------------------------- programa carregado ");
-		aux.dump(vm.m, 0, 33);
+		memoryHelper.dump(vm.m, 0, 33);
 		System.out.println("---------------------------------- após execucao ");
 		vm.cpu.run();
-		aux.dump(vm.m, 0, 33);
+		memoryHelper.dump(vm.m, 0, 33);
 	}
 
 	public void test2(){
-		Aux aux = new Aux();
+		MemoryHelper memoryHelper = new MemoryHelper();
 		Word[] p = new Programas().progMinimo;
-		aux.carga(p, vm.m);
+		memoryHelper.carga(p, vm.m);
 		vm.cpu.setContext(0);
 		System.out.println("---------------------------------- programa carregado ");
-		aux.dump(vm.m, 0, 15);
+		memoryHelper.dump(vm.m, 0, 15);
 		System.out.println("---------------------------------- após execucao ");
 		vm.cpu.run();
-		aux.dump(vm.m, 0, 15);
+		memoryHelper.dump(vm.m, 0, 15);
 	}
 
 }

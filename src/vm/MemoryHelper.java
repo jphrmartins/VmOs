@@ -1,7 +1,7 @@
 package vm;
 
 // -------------------------------------------  classes e funcoes auxiliares
-public class Aux {
+public class MemoryHelper {
     public void dump(Word w) {
         System.out.print("[ ");
         System.out.print(w.getOpc());
