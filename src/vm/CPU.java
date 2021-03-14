@@ -30,6 +30,9 @@ public class CPU {
     public void setPc(int pc) {
         this.pc = pc;
     }
+    public void incrementPc() {
+        this.pc++;
+    }
 
     public void run() {        // execucao da vm.CPU supoe que o contexto da vm.CPU, vide acima, esta devidamente setado
         // break sai do loop da cpu
