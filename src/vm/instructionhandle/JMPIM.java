@@ -5,14 +5,14 @@ import vm.InstructionRule;
 import vm.Opcode;
 import vm.Word;
 
-public class JMPIRule implements InstructionRule {
+public class JMPIM implements InstructionRule {
     @Override
     public boolean shouldExecute(Opcode opcode) {
-        return opcode == Opcode.JMPI;
+        return opcode == Opcode.JMPIM;
     }
 
     @Override
     public void executeRule(CPU cpu, Word instruction) {
-        cpu.setPc(cpu.getReg()[instruction.getP()]);
+        cpu.setPc(cpu.getMemory()[instruction.getP()].getP());
     }
 }

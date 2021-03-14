@@ -1,7 +1,5 @@
 package vm;
 
-import vm.Opcode;
-
 public class Word {    // cada posicao da memoria tem uma instrucao (ou um dado)
     private Opcode opc;    //
     private int r1;        // indice do primeiro registrador da operacao (Rs ou Rd cfe opcode na tabela)
