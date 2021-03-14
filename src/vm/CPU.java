@@ -1,17 +1,18 @@
 package vm;
 
-import java.util.List;
+import java.util.Set;
 
 public class CPU {
     // característica do processador: contexto da vm.CPU ...
     private int pc;             // ... composto de program counter,
     private final int[] reg;        // registradores da vm.CPU
     private final Word[] memory;   // vm.CPU acessa MEMORIA, guarda referencia 'm' a ela. memoria nao muda. ee sempre a mesma.
-    private List<Instruction> instructions;
+    private Set<InstructionRule> instructionRules;
 
-    public CPU(Word[] memory) {     // ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
+    public CPU(Word[] memory, Set<InstructionRule> instructionRules) {     // ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
         this.memory = memory;                // usa o atributo 'm' para acessar a memoria.
-        reg = new int[8];        // aloca o espaço dos registradores
+        reg = new int[8];     // aloca o espaço dos registradores
+        this.instructionRules = instructionRules;
     }
 
     public int getPc() {
@@ -44,7 +45,14 @@ public class CPU {
         do {            // ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
             // FETCH
             instruction = memory[pc];    // busca posicao da memoria apontada por pc, guarda em instruction
-
+            if (instruction.getOpc() != Opcode.STOP) {
+                for (InstructionRule rule : instructionRules) {
+                    if (rule.shouldExecute(instruction.getOpc())) {
+                        rule.executeRule(this, instruction);
+                        break;
+                    }
+                }
+            }
 
         } while (instruction.getOpc() != Opcode.STOP); // VERIFICA INTERRUPÇÃO !!! - TERCEIRA FASE DO CICLO DE INSTRUÇÕES
         //Mudei por que o intellij falou para.... :madeByJp:

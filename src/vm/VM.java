@@ -1,7 +1,8 @@
 package vm;
 
-import vm.CPU;
-import vm.Opcode;
+import vm.instructionhandle.*;
+
+import java.util.*;
 
 // ------------------- V M  - constituida de vm.CPU e MEMORIA -----------------------------------------------
 // -------------------------- atributos e construcao da vm.VM -----------------------------------------------
@@ -19,6 +20,9 @@ public class VM {
         }
         ;
         // cpu
-        cpu = new CPU(m);
+        Set<InstructionRule> instructionRules = new HashSet<>();
+        Collections.addAll(instructionRules, new ADDIRule(), new ADDRule(), new JMPIGRule(), new LDIRule(),
+                new STDRule(), new STXRule(), new SUBRule());
+        cpu = new CPU(m, instructionRules);
     }
 }
