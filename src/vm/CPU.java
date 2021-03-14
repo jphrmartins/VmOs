@@ -11,8 +11,24 @@ public class CPU {
         reg = new int[8];        // aloca o espaço dos registradores
     }
 
+    public int getPc() {
+        return pc;
+    }
+
+    public int[] getReg() {
+        return reg;
+    }
+
+    public Word[] getMemory() {
+        return memory;
+    }
+
     public void setContext(int pc) {  // no futuro esta funcao vai ter que ser
         this.pc = pc;                                              // limite e pc (deve ser zero nesta versao)
+    }
+
+    public void setPc(int pc) {
+        this.pc = pc;
     }
 
     public void run() {        // execucao da vm.CPU supoe que o contexto da vm.CPU, vide acima, esta devidamente setado
