@@ -15,9 +15,9 @@ public class Programas {
         };
 
         public Word[] fibonacci10 = new Word[] { // mesmo que prog exemplo, so que usa r0 no lugar de r8
-                new Word(Opcode.LDI, R2, ANY, 0), 
+                new Word(Opcode.LDI, R2, ANY, 0),
                 new Word(Opcode.STD, R2, ANY, 20), // 50
-                new Word(Opcode.LDI, R3, ANY, 1), 
+                new Word(Opcode.LDI, R3, ANY, 1),
                 new Word(Opcode.STD, R4, ANY, 21), // 51
                 new Word(Opcode.LDI, R1, ANY, 22), // 52
                 new Word(Opcode.LDI, R7, ANY, 6), 
@@ -38,6 +38,8 @@ public class Programas {
                 new Word(Opcode.LDI, R1, ANY, 300),
                 new Word(Opcode.LDI, R2, ANY, 500),
                 new Word(Opcode.SWAP, R1, R2, -1),
+                new Word(Opcode.STD, R1, ANY, 7),
+                new Word(Opcode.STD, R2, ANY, 8),
                 new Word(Opcode.STOP, ANY, ANY, -1)
         };
 
