@@ -13,6 +13,6 @@ public class JMPRule implements InstructionRule {
 
     @Override
     public void executeRule(CPU cpu, Word instruction) {
-        cpu.setPc(instruction.getP());
+        cpu.setContext(instruction.getP());
     }
 }

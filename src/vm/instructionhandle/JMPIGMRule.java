@@ -14,7 +14,7 @@ public class JMPIGMRule implements InstructionRule {
     @Override
     public void executeRule(CPU cpu, Word instruction) {
         if (cpu.getReg()[instruction.getR2()] > 0) {
-            cpu.setPc(cpu.getMemory()[instruction.getP()].getP());
+            cpu.setContext(cpu.getMemory()[instruction.getP()].getP());
         } else {
             cpu.incrementPc();
         }
