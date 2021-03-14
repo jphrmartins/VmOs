@@ -13,7 +13,7 @@ public class STXRule implements InstructionRule {
 
     @Override
     public void executeRule(CPU cpu, Word instruction) {
-        cpu.getMemory()[cpu.getReg()[instruction.getR1()]] = Word.newData(cpu.getReg()[instruction.getR1()]);
+        cpu.getMemory()[cpu.getReg()[instruction.getR1()]] = Word.newData(cpu.getReg()[instruction.getR2()]);
         cpu.incrementPc();
     }
 }

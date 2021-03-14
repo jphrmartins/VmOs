@@ -34,7 +34,7 @@ public class Programas {
                 new Word(Opcode.STOP, ANY, ANY, -1) 
         };
 
-        public Word[] bubbleSort = new Word[]{
+        public Word[] bubbleSort = new Word[] {
                 new Word(Opcode.LDI, R1, ANY, 300),
                 new Word(Opcode.LDI, R2, ANY, 500),
                 new Word(Opcode.SWAP, R1, R2, -1),
