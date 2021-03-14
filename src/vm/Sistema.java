@@ -12,8 +12,9 @@ public class Sistema {
 	}
 	public static void main(String args[]) {
 		Sistema s = new Sistema();
-		s.test2();
-		s.test1();
+//		s.test2();
+//		s.test1();
+		s.test3();
 	}
 
 	public void test1(){
@@ -38,6 +39,18 @@ public class Sistema {
 		System.out.println("---------------------------------- após execucao ");
 		vm.cpu.run();
 		memoryHelper.dump(vm.m, 0, 15);
+	}
+
+	public void test3(){
+		MemoryHelper memoryHelper = new MemoryHelper();
+		Word[] p = new Programas().bubbleSort;
+		memoryHelper.carga(p, vm.m);
+		vm.cpu.setContext(0);
+		System.out.println("---------------------------------- programa carregado ");
+		memoryHelper.dump(vm.m, 0, 9);
+		System.out.println("---------------------------------- após execucao ");
+		vm.cpu.run();
+		memoryHelper.dump(vm.m, 0, 9);
 	}
 
 }
