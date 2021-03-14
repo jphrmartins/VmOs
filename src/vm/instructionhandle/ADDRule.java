@@ -1,11 +1,11 @@
 package vm.instructionhandle;
 
 import vm.CPU;
-import vm.InstructionLoop;
+import vm.Instruction;
 import vm.Opcode;
 import vm.Word;
 
-public class ADDRule implements InstructionLoop {
+public class ADDRule implements Instruction {
     @Override
     public boolean shouldExecute(Opcode opcode) {
         return opcode == Opcode.ADD;

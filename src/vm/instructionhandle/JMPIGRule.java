@@ -5,15 +5,19 @@ import vm.Instruction;
 import vm.Opcode;
 import vm.Word;
 
-public class LDIRule implements Instruction {
+public class JMPIGRule implements Instruction {
+
     @Override
     public boolean shouldExecute(Opcode opcode) {
-        return opcode == Opcode.LDI;
+        return opcode == Opcode.JMPIG;
     }
 
     @Override
     public void executeInstruction(CPU cpu, Word instruction) {
-        cpu.getReg()[instruction.getR1()] = instruction.getP();
-        cpu.incrementPc();
+        if (cpu.getReg()[instruction.getR2()] > 0) {
+            cpu.setPc(cpu.getReg()[instruction.getR1()]);
+        } else {
+            cpu.incrementPc();
+        }
     }
 }

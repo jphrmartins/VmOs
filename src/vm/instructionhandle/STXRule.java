@@ -1,11 +1,11 @@
 package vm.instructionhandle;
 
 import vm.CPU;
-import vm.InstructionLoop;
+import vm.Instruction;
 import vm.Opcode;
 import vm.Word;
 
-public class STXRule implements InstructionLoop {
+public class STXRule implements Instruction {
     @Override
     public boolean shouldExecute(Opcode opcode) {
         return opcode == Opcode.STX;

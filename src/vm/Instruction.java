@@ -1,6 +1,6 @@
 package vm;
 
-public interface InstructionLoop {
+public interface Instruction {
 
     boolean shouldExecute(Opcode opcode);
 
