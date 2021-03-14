@@ -21,10 +21,11 @@ public class VM {
         ;
         // cpu
         Set<InstructionRule> instructionRules = new HashSet<>();
-        Collections.addAll(instructionRules, new ADDIRule(), new ADDRule(), new JMPIGRule(),
-                new JMPIRule(), new JMPRule(), new LDIRule(), new STDRule(), new STXRule(), new SUBRule()
-
-                );
+        Collections.addAll(instructionRules, new JMPRule(), new JMPIRule(), new JMPIGRule(), new JMPILMRule(),
+                new JMPIERule(), new JMPIMRule(), new JMPIGMRule(), new JMPILMRule(), new JMPIEMRule(),
+                new ADDIRule(), new SUBIRule(), new ADDRule(), new SUBRule(), new MULTRule(), new LDIRule(),
+                new LDDRule(), new STDRule(), new LDXRule(), new STXRule(), new SWAPRule()
+        );
         cpu = new CPU(m, instructionRules);
     }
 }

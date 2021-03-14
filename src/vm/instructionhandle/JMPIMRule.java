@@ -5,7 +5,7 @@ import vm.InstructionRule;
 import vm.Opcode;
 import vm.Word;
 
-public class JMPIM implements InstructionRule {
+public class JMPIMRule implements InstructionRule {
     @Override
     public boolean shouldExecute(Opcode opcode) {
         return opcode == Opcode.JMPIM;
