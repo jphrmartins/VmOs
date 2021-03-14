@@ -24,6 +24,10 @@ public class Word {    // cada posicao da memoria tem uma instrucao (ou um dado)
         return new Word();
     }
 
+    public static Word stop() {
+        return new Word(Opcode.STOP, CPU.Register.ANY, CPU.Register.ANY, -1);
+    }
+
     public Word clone() {
         return new Word(this.opc, this.r1, this.r2, this.p);
     }

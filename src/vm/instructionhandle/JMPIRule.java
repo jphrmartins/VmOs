@@ -13,6 +13,6 @@ public class JMPIRule implements InstructionRule {
 
     @Override
     public void executeRule(CPU cpu, Word instruction) {
-        cpu.setPc(cpu.getReg()[instruction.getP()]);
+        cpu.setContext(cpu.getReg()[instruction.getP()]);
     }
 }

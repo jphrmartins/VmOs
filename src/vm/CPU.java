@@ -31,9 +31,6 @@ public class CPU {
         this.pc = pc;                                              // limite e pc (deve ser zero nesta versao)
     }
 
-    public void setPc(int pc) {
-        this.pc = pc;
-    }
     public void incrementPc() {
         this.pc++;
     }
