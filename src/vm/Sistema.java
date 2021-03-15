@@ -47,10 +47,10 @@ public class Sistema {
 		memoryHelper.carga(p, vm.m);
 		vm.cpu.setContext(0);
 		System.out.println("---------------------------------- programa carregado ");
-		memoryHelper.dump(vm.m, 0, 9);
+		memoryHelper.dump(vm.m, 0, 65);
 		System.out.println("---------------------------------- após execucao ");
 		vm.cpu.run();
-		memoryHelper.dump(vm.m, 0, 9);
+		memoryHelper.dump(vm.m, 0, 65);
 	}
 
 }

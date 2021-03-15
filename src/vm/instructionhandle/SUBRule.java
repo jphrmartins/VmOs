@@ -13,7 +13,7 @@ public class SUBRule implements InstructionRule {
 
     @Override
     public void executeRule(CPU cpu, Word instruction) {
-        cpu.getReg()[instruction.getR2()] = cpu.getReg()[instruction.getR1()] - cpu.getReg()[instruction.getR2()];
+        cpu.getReg()[instruction.getR1()] = cpu.getReg()[instruction.getR1()] - cpu.getReg()[instruction.getR2()];
         cpu.incrementPc();
     }
 }
