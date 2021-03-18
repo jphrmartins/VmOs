@@ -12,9 +12,9 @@ public class Sistema {
 	}
 	public static void main(String args[]) {
 		Sistema s = new Sistema();
-//		s.test2();
+		s.test2();
 //		s.test1();
-		s.test3();
+//		s.test3();
 	}
 
 	public void test1(){

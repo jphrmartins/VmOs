@@ -7,7 +7,7 @@ public class CPU {
     private int pc;             // ... composto de program counter,
     private final int[] reg;        // registradores da vm.CPU
     private final Word[] memory;   // vm.CPU acessa MEMORIA, guarda referencia 'm' a ela. memoria nao muda. ee sempre a mesma.
-    private Set<InstructionRule> instructionRules;
+    private final Set<InstructionRule> instructionRules;
 
     public CPU(Word[] memory, Set<InstructionRule> instructionRules) {     // ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
         this.memory = memory;                // usa o atributo 'm' para acessar a memoria.
