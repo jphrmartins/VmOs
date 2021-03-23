@@ -1,9 +1,7 @@
 package vm.instructionhandle;
 
-import vm.CPU;
-import vm.InstructionRule;
-import vm.Opcode;
-import vm.Word;
+import vm.*;
+import vm.interruptions.SystemInterrupt;
 
 public class SWAPRule implements InstructionRule {
     @Override
@@ -12,11 +10,12 @@ public class SWAPRule implements InstructionRule {
     }
 
     @Override
-    public void executeRule(CPU cpu, Word instruction) {
-        int aux = cpu.getReg()[instruction.getR1()];
-        cpu.getReg()[instruction.getR1()] = cpu.getReg()[instruction.getR2()];
-        cpu.getReg()[instruction.getR2()] = aux;
+    public SystemInterrupt executeRule(CPU cpu, Word instruction) {
+        int aux = cpu.getRegistries()[instruction.getR1()];
+        cpu.getRegistries()[instruction.getR1()] = cpu.getRegistries()[instruction.getR2()];
+        cpu.getRegistries()[instruction.getR2()] = aux;
         cpu.incrementPc();
+        return null;
     }
     
 }

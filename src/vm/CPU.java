@@ -1,58 +1,70 @@
 package vm;
 
+import vm.interruptions.SystemInterrupt;
+import vm.interruptions.list.MemoryOutOfBoundsInterruption;
+
 import java.util.Set;
 
 public class CPU {
-    // característica do processador: contexto da vm.CPU ...
-    private int pc;             // ... composto de program counter,
-    private final int[] reg;        // registradores da vm.CPU
+    private int programCounter;             // ... composto de program counter,
+    private final SystemOperational systemOperational; //Pointer to the sysops
+    private final int[] registries; //Registradores
     private final Word[] memory;   // vm.CPU acessa MEMORIA, guarda referencia 'm' a ela. memoria nao muda. ee sempre a mesma.
     private final Set<InstructionRule> instructionRules;
 
-    public CPU(Word[] memory, Set<InstructionRule> instructionRules) {     // ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
+    public CPU(SystemOperational systemOperational, Word[] memory, Set<InstructionRule> instructionRules) {     // ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
         this.memory = memory;                // usa o atributo 'm' para acessar a memoria.
-        reg = new int[8];     // aloca o espaço dos registradores
+        registries = new int[8];     // aloca o espaço dos registradores
         this.instructionRules = instructionRules;
+        this.systemOperational = systemOperational;
     }
 
-    public int getPc() {
-        return pc;
+    public int[] getRegistries() {
+        return registries;
     }
 
-    public int[] getReg() {
-        return reg;
-    }
-
+    /**
+     * Accessor method the get the cpu memory
+     *
+     * @return The memory
+     */
     public Word[] getMemory() {
         return memory;
     }
 
     public void setContext(int pc) {  // no futuro esta funcao vai ter que ser
-        this.pc = pc;                                              // limite e pc (deve ser zero nesta versao)
+        this.programCounter = pc;                                              // limite e pc (deve ser zero nesta versao)
+    }
+
+    public SystemOperational getSystemPointer() {
+        return this.systemOperational;
     }
 
     public void incrementPc() {
-        this.pc++;
+        this.programCounter++;
     }
 
     public void run() {        // execucao da vm.CPU supoe que o contexto da vm.CPU, vide acima, esta devidamente setado
-        // break sai do loop da cpu
         // instruction register,
         Word instruction;
-        do {            // ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
-            // FETCH
-            instruction = memory[pc];    // busca posicao da memoria apontada por pc, guarda em instruction
-            if (instruction.getOpc() != Opcode.STOP) {
+        while (true) { // ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
+            SystemInterrupt interrupt = null;
+            if (programCounter > memory.length) {
+                interrupt = new MemoryOutOfBoundsInterruption(programCounter, memory.length);
+            } else {
+                instruction = memory[programCounter];    // busca posicao da memoria apontada por pc, guarda em instruction
                 for (InstructionRule rule : instructionRules) {
                     if (rule.shouldExecute(instruction.getOpc())) {
-                        rule.executeRule(this, instruction);
+                        interrupt = rule.executeRule(this, instruction);
                         break;
                     }
                 }
             }
-
-        } while (instruction.getOpc() != Opcode.STOP); // VERIFICA INTERRUPÇÃO !!! - TERCEIRA FASE DO CICLO DE INSTRUÇÕES
-        //Mudei por que o intellij falou para.... :madeByJp:
+            if (interrupt != null) {
+                boolean shouldHalt = systemOperational.handleInterruption(this, interrupt);
+                if (shouldHalt) break; // break sai do loop da cpu
+            }
+        }
     }
 
     public static class Register {

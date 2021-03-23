@@ -7,7 +7,7 @@ public class Word {    // cada posicao da memoria tem uma instrucao (ou um dado)
     private int p;        // parametro para instrucao (k ou A cfe operacao), ou o dado, se opcode = DADO
 
     private Word() {
-        this.opc = Opcode.___;
+        this.opc = Opcode.NULL;
     }
 
     public Word(Opcode opc, int r1, int r2, int p) {

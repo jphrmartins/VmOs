@@ -1,9 +1,7 @@
 package vm.instructionhandle;
 
-import vm.CPU;
-import vm.InstructionRule;
-import vm.Opcode;
-import vm.Word;
+import vm.*;
+import vm.interruptions.SystemInterrupt;
 
 public class JMPIMRule implements InstructionRule {
     @Override
@@ -12,7 +10,8 @@ public class JMPIMRule implements InstructionRule {
     }
 
     @Override
-    public void executeRule(CPU cpu, Word instruction) {
+    public SystemInterrupt executeRule(CPU cpu, Word instruction) {
         cpu.setContext(cpu.getMemory()[instruction.getP()].getP());
+        return null;
     }
 }

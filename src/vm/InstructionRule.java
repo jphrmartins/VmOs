@@ -1,8 +1,10 @@
 package vm;
 
+import vm.interruptions.SystemInterrupt;
+
 public interface InstructionRule {
 
     boolean shouldExecute(Opcode opcode);
 
-    void executeRule(CPU cpu, Word instruction);
+    SystemInterrupt executeRule(CPU cpu, Word instruction);
 }

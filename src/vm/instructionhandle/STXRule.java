@@ -1,9 +1,7 @@
 package vm.instructionhandle;
 
-import vm.CPU;
-import vm.InstructionRule;
-import vm.Opcode;
-import vm.Word;
+import vm.*;
+import vm.interruptions.SystemInterrupt;
 
 public class STXRule implements InstructionRule {
     @Override
@@ -12,8 +10,9 @@ public class STXRule implements InstructionRule {
     }
 
     @Override
-    public void executeRule(CPU cpu, Word instruction) {
-        cpu.getMemory()[cpu.getReg()[instruction.getR1()]] = Word.newData(cpu.getReg()[instruction.getR2()]);
+    public SystemInterrupt executeRule(CPU cpu, Word instruction) {
+        cpu.getMemory()[cpu.getRegistries()[instruction.getR1()]] = Word.newData(cpu.getRegistries()[instruction.getR2()]);
         cpu.incrementPc();
+        return null;
     }
 }
