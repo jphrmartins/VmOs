@@ -36,7 +36,7 @@ public class Programas {
 
         public Word[] bubbleSort = new Word[] {
                 new Word(Opcode.LDI, R1, ANY, 15),
-                new Word(Opcode.STD, R1, ANY, 60), //inicio do vetor na memoria[50]
+                new Word(Opcode.STD, R1, ANY, 60), //inicio do vetor na memoria[60]
                 new Word(Opcode.LDI, R1, ANY, 7),
                 new Word(Opcode.STD, R1, ANY, 61),
                 new Word(Opcode.LDI, R1, ANY, 3),
@@ -44,16 +44,16 @@ public class Programas {
                 new Word(Opcode.LDI, R1, ANY, 9),
                 new Word(Opcode.STD, R1, ANY, 63),
                 new Word(Opcode.LDI, R1, ANY, 1),
-                new Word(Opcode.STD, R1, ANY, 64), // fim do vetor na memoria[54]
+                new Word(Opcode.STD, R1, ANY, 64), // fim do vetor na memoria[64]
                 
                 new Word(Opcode.LDI, R1, ANY, 60), // marcador do inicio do vetor
-                new Word(Opcode.STD, R1, ANY, 50), // salvando o inicio em memoria[40]
-                new Word(Opcode.STD, R1, ANY, 51), // i = inicio do vetor em memoria[41]
-                new Word(Opcode.STD, R1, ANY, 52), // j = inicio do vetor em memoria[42]
+                new Word(Opcode.STD, R1, ANY, 50), // salvando o inicio em memoria[50]
+                new Word(Opcode.STD, R1, ANY, 51), // i = inicio do vetor em memoria[51]
+                new Word(Opcode.STD, R1, ANY, 52), // j = inicio do vetor em memoria[52]
                 new Word(Opcode.LDI, R1, ANY, 61), // colocando j + 1 no registrador[1]
-                new Word(Opcode.STD, R1, ANY, 53), // salvando j + 1 em memoria[43]
+                new Word(Opcode.STD, R1, ANY, 53), // salvando j + 1 em memoria[53]
                 new Word(Opcode.LDI, R1, ANY, 65), // setando fim do vetor no registrador[1]
-                new Word(Opcode.STD, R1, ANY, 54), // marcador do a posicao final do vetor em memoria[44]
+                new Word(Opcode.STD, R1, ANY, 54), // marcador do a posicao final do vetor em memoria[54]
                 
                 new Word(Opcode.LDD, R1, ANY, 51), //iniciando "i" com a posicao inicial do vet
                 //loop_i

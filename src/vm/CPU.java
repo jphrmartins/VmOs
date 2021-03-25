@@ -1,6 +1,7 @@
 package vm;
 
 import vm.interruptions.SystemInterrupt;
+import vm.interruptions.list.InvalidRuleInterruption;
 import vm.interruptions.list.MemoryOutOfBoundsInterruption;
 
 import java.util.Set;
@@ -9,7 +10,7 @@ public class CPU {
     private int programCounter;             // ... composto de program counter,
     private final SystemOperational systemOperational; //Pointer to the sysops
     private final int[] registries; //Registradores
-    private final Word[] memory;   // vm.CPU acessa MEMORIA, guarda referencia 'm' a ela. memoria nao muda. ee sempre a mesma.
+    private final Word[] memory;   //vm.CPU acessa MEMORIA, guarda referencia 'm' a ela. memoria nao muda. ee sempre a mesma.
     private final Set<InstructionRule> instructionRules;
 
     public CPU(SystemOperational systemOperational, Word[] memory, Set<InstructionRule> instructionRules) {     // ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
@@ -59,6 +60,7 @@ public class CPU {
                         break;
                     }
                 }
+                interrupt = new InvalidRuleInterruption(instruction.getOpc());
             }
             if (interrupt != null) {
                 boolean shouldHalt = systemOperational.handleInterruption(this, interrupt);

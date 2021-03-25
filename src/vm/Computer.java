@@ -12,7 +12,7 @@ public class Computer {
 	}
 	public static void main(String args[]) {
 		Computer s = new Computer();
-		s.test2();
+		s.bubbleSortProgram();
 	}
 
 	public void test1(){
@@ -39,7 +39,7 @@ public class Computer {
 		memoryHelper.dump(systemOperational.m, 0, 15);
 	}
 
-	public void test3(){
+	public void bubbleSortProgram(){
 		MemoryHelper memoryHelper = new MemoryHelper();
 		Word[] p = new Programas().bubbleSort;
 		memoryHelper.carga(p, systemOperational.m);
