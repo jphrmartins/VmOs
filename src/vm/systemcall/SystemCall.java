@@ -1,10 +1,11 @@
 package vm.systemcall;
 
+
+import vm.CPU;
 /**
  * SystemCall
  */
 public interface SystemCall {
-    boolean shouldCall();
-    int call();
+    void executeCall(CPU cpu);
     
 }

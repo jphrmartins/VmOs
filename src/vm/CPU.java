@@ -15,7 +15,7 @@ public class CPU {
 
     public CPU(SystemOperational systemOperational, Word[] memory, Set<InstructionRule> instructionRules) {     // ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
         this.memory = memory;                // usa o atributo 'm' para acessar a memoria.
-        registries = new int[8];     // aloca o espaço dos registradores
+        registries = new int[9];     // aloca o espaço dos registradores
         this.instructionRules = instructionRules;
         this.systemOperational = systemOperational;
     }
@@ -54,13 +54,14 @@ public class CPU {
                 interrupt = new MemoryOutOfBoundsInterruption(programCounter, memory.length);
             } else {
                 instruction = memory[programCounter];    // busca posicao da memoria apontada por pc, guarda em instruction
+                interrupt = new InvalidRuleInterruption(instruction.getOpc());
                 for (InstructionRule rule : instructionRules) {
                     if (rule.shouldExecute(instruction.getOpc())) {
                         interrupt = rule.executeRule(this, instruction);
                         break;
                     }
                 }
-                interrupt = new InvalidRuleInterruption(instruction.getOpc());
+                
             }
             if (interrupt != null) {
                 boolean shouldHalt = systemOperational.handleInterruption(this, interrupt);
@@ -78,6 +79,7 @@ public class CPU {
         public static final int R6 = 5;
         public static final int R7 = 6;
         public static final int R8 = 7;
+        public static final int R9 = 8;
         public static final int ANY = -1;
     }
 }
