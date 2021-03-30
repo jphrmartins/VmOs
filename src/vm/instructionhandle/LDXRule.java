@@ -1,6 +1,7 @@
 package vm.instructionhandle;
 import vm.*;
 import vm.interruptions.SystemInterrupt;
+import vm.interruptions.list.MemoryOutOfBoundsInterruption;
 
 public class LDXRule implements InstructionRule {
 
@@ -11,6 +12,9 @@ public class LDXRule implements InstructionRule {
 
     @Override
     public SystemInterrupt executeRule(CPU cpu, Word instruction) {
+        if(cpu.getRegistries()[instruction.getR2()] < 0 || cpu.getRegistries()[instruction.getR2()] > cpu.getMemory().length){
+            return new MemoryOutOfBoundsInterruption(cpu.getRegistries()[instruction.getR2()], cpu.getMemory().length);
+        }
         cpu.getRegistries()[instruction.getR1()] = cpu.getMemory()[cpu.getRegistries()[instruction.getR2()]].getP();
         cpu.incrementPc();
         return null;

@@ -12,32 +12,36 @@ public class Computer {
 	}
 	public static void main(String args[]) {
 		Computer s = new Computer();
+		//s.fibonacci();
+		//s.fatorial();
 		//s.bubbleSortProgram();
-		s.systemcallTest();
+		//s.systemcallTest();
+		s.systemInterruptTest();
+		
 	}
 
-	public void test1(){
+	public void fibonacci(){
 		MemoryHelper memoryHelper = new MemoryHelper();
-		Word[] p = new Programas().fibonacci10;
+		Word[] p = new Programas().fibonacci;
 		memoryHelper.carga(p, systemOperational.m);
 		systemOperational.cpu.setContext(0);
 		System.out.println("---------------------------------- programa carregado ");
-		memoryHelper.dump(systemOperational.m, 0, 33);
+		memoryHelper.dump(systemOperational.m, 0, 60);
 		System.out.println("---------------------------------- após execucao ");
 		systemOperational.cpu.run();
-		memoryHelper.dump(systemOperational.m, 0, 33);
+		memoryHelper.dump(systemOperational.m, 0, 60);
 	}
 
-	public void test2(){
+	public void fatorial(){
 		MemoryHelper memoryHelper = new MemoryHelper();
-		Word[] p = new Programas().progMinimo;
+		Word[] p = new Programas().fatorial;
 		memoryHelper.carga(p, systemOperational.m);
 		systemOperational.cpu.setContext(0);
 		System.out.println("---------------------------------- programa carregado ");
-		memoryHelper.dump(systemOperational.m, 0, 15);
+		memoryHelper.dump(systemOperational.m, 0, 24);
 		System.out.println("---------------------------------- após execucao ");
 		systemOperational.cpu.run();
-		memoryHelper.dump(systemOperational.m, 0, 15);
+		memoryHelper.dump(systemOperational.m, 0, 24);
 	}
 
 	public void bubbleSortProgram(){
@@ -55,6 +59,18 @@ public class Computer {
 	public void systemcallTest(){
 		MemoryHelper memoryHelper = new MemoryHelper();
 		Word[] p = new Programas().systemCallTest;
+		memoryHelper.carga(p, systemOperational.m);
+		systemOperational.cpu.setContext(0);
+		System.out.println("---------------------------------- programa carregado ");
+		memoryHelper.dump(systemOperational.m, 0, 15);
+		System.out.println("---------------------------------- após execucao ");
+		systemOperational.cpu.run();
+		memoryHelper.dump(systemOperational.m, 0, 15);
+	}
+
+	public void systemInterruptTest(){
+		MemoryHelper memoryHelper = new MemoryHelper();
+		Word[] p = new Programas().systemInterruptionTest;
 		memoryHelper.carga(p, systemOperational.m);
 		systemOperational.cpu.setContext(0);
 		System.out.println("---------------------------------- programa carregado ");

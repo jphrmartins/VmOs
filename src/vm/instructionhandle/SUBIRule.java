@@ -11,7 +11,7 @@ public class SUBIRule implements InstructionRule {
 
     @Override
     public SystemInterrupt executeRule(CPU cpu, Word instruction) {
-        cpu.getRegistries()[instruction.getR1()] = cpu.getRegistries()[instruction.getR1()] + instruction.getP();
+        cpu.getRegistries()[instruction.getR1()] = cpu.getRegistries()[instruction.getR1()] - instruction.getP();
         cpu.incrementPc();
         return null;
     }
