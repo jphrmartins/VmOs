@@ -161,10 +161,19 @@ public class Programas {
                 new Word(Opcode.TRAP, R8, R9, -1)
         };
 
+<<<<<<< HEAD
         public Word[] systemInterruptionTest = new Word[]{
                 new Word(Opcode.LDD, R1, ANY, 2000),
                 new Word(Opcode.LDD, R1, ANY, -5),
                 new Word(Opcode.STOP, ANY, ANY, -1),
+=======
+        public Word[] interruptTest = new Word[]{
+                new Word(Opcode.LDI, R1, ANY, 0), 
+                new Word(Opcode.STD, R1, ANY, 10),
+                new Word(Opcode.JMP, ANY, ANY, 9999),
+                new Word(Opcode.STD, R1, ANY, 11), 
+                new Word(Opcode.STOP, ANY, ANY, -1) 
+>>>>>>> bec625b5f1fe7c789e7e8ff9f4686a1f33848a8d
         };
 
 }

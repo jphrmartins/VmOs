@@ -16,8 +16,12 @@ public class Computer {
 		//s.fatorial();
 		//s.bubbleSortProgram();
 		//s.systemcallTest();
+<<<<<<< HEAD
 		s.systemInterruptTest();
 		
+=======
+		s.interruptTestProgram();
+>>>>>>> bec625b5f1fe7c789e7e8ff9f4686a1f33848a8d
 	}
 
 	public void fibonacci(){
@@ -68,9 +72,15 @@ public class Computer {
 		memoryHelper.dump(systemOperational.m, 0, 15);
 	}
 
+<<<<<<< HEAD
 	public void systemInterruptTest(){
 		MemoryHelper memoryHelper = new MemoryHelper();
 		Word[] p = new Programas().systemInterruptionTest;
+=======
+	public void interruptTestProgram(){
+		MemoryHelper memoryHelper = new MemoryHelper();
+		Word[] p = new Programas().interruptTest;
+>>>>>>> bec625b5f1fe7c789e7e8ff9f4686a1f33848a8d
 		memoryHelper.carga(p, systemOperational.m);
 		systemOperational.cpu.setContext(0);
 		System.out.println("---------------------------------- programa carregado ");
