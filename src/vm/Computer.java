@@ -13,7 +13,8 @@ public class Computer {
 	public static void main(String args[]) {
 		Computer s = new Computer();
 		//s.bubbleSortProgram();
-		s.systemcallTest();
+		//s.systemcallTest();
+		s.interruptTestProgram();
 	}
 
 	public void test1(){
@@ -55,6 +56,18 @@ public class Computer {
 	public void systemcallTest(){
 		MemoryHelper memoryHelper = new MemoryHelper();
 		Word[] p = new Programas().systemCallTest;
+		memoryHelper.carga(p, systemOperational.m);
+		systemOperational.cpu.setContext(0);
+		System.out.println("---------------------------------- programa carregado ");
+		memoryHelper.dump(systemOperational.m, 0, 15);
+		System.out.println("---------------------------------- após execucao ");
+		systemOperational.cpu.run();
+		memoryHelper.dump(systemOperational.m, 0, 15);
+	}
+
+	public void interruptTestProgram(){
+		MemoryHelper memoryHelper = new MemoryHelper();
+		Word[] p = new Programas().interruptTest;
 		memoryHelper.carga(p, systemOperational.m);
 		systemOperational.cpu.setContext(0);
 		System.out.println("---------------------------------- programa carregado ");
