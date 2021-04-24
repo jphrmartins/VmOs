@@ -5,79 +5,37 @@ package vm;// PUCRS - Escola Politécnica - Sistemas Operacionais
 // Fase 1 - máquina virtual (vide enunciado correspondente)
 //
 
+import vm.programs.*;
+
+import java.util.Arrays;
+import java.util.List;
+
 public class Computer {
 	public SystemOperational systemOperational;
     public Computer(){   // a vm.VM com tratamento de interrupções
 		 systemOperational = new SystemOperational();
 	}
 	public static void main(String args[]) {
+    	List<Program> programs = Arrays.asList(new Fibo(), new Factorial(),
+				new BubbleSort(), new SystemCallTest(), new InterruptTest());
 		Computer s = new Computer();
 		//s.fibonacci();
 		//s.fatorial();
 		//s.bubbleSortProgram();
 		//s.systemcallTest();
-		s.interruptTestProgram();
 	}
 
-	public void fibonacci(){
-		MemoryHelper memoryHelper = new MemoryHelper();
-		Word[] p = new Programas().fibonacci;
-		memoryHelper.carga(p, systemOperational.m);
-		systemOperational.cpu.setContext(0);
-		System.out.println("---------------------------------- programa carregado ");
-		memoryHelper.dump(systemOperational.m, 0, 60);
-		System.out.println("---------------------------------- após execucao ");
-		systemOperational.cpu.run();
-		memoryHelper.dump(systemOperational.m, 0, 60);
-	}
-
-	public void fatorial(){
-		MemoryHelper memoryHelper = new MemoryHelper();
-		Word[] p = new Programas().fatorial;
-		memoryHelper.carga(p, systemOperational.m);
-		systemOperational.cpu.setContext(0);
-		System.out.println("---------------------------------- programa carregado ");
-		memoryHelper.dump(systemOperational.m, 0, 24);
-		System.out.println("---------------------------------- após execucao ");
-		systemOperational.cpu.run();
-		memoryHelper.dump(systemOperational.m, 0, 24);
-	}
-
-	public void bubbleSortProgram(){
-		MemoryHelper memoryHelper = new MemoryHelper();
-		Word[] p = new Programas().bubbleSort;
-		memoryHelper.carga(p, systemOperational.m);
-		systemOperational.cpu.setContext(0);
-		System.out.println("---------------------------------- programa carregado ");
-		memoryHelper.dump(systemOperational.m, 0, 65);
-		System.out.println("---------------------------------- após execucao ");
-		systemOperational.cpu.run();
-		memoryHelper.dump(systemOperational.m, 0, 65);
-	}
-
-	public void systemcallTest(){
-		MemoryHelper memoryHelper = new MemoryHelper();
-		Word[] p = new Programas().systemCallTest;
-		memoryHelper.carga(p, systemOperational.m);
-		systemOperational.cpu.setContext(0);
-		System.out.println("---------------------------------- programa carregado ");
-		memoryHelper.dump(systemOperational.m, 0, 15);
-		System.out.println("---------------------------------- após execucao ");
-		systemOperational.cpu.run();
-		memoryHelper.dump(systemOperational.m, 0, 15);
-	}
-
-	public void interruptTestProgram(){
-		MemoryHelper memoryHelper = new MemoryHelper();
-		Word[] p = new Programas().interruptTest;
-		memoryHelper.carga(p, systemOperational.m);
-		systemOperational.cpu.setContext(0);
-		System.out.println("---------------------------------- programa carregado ");
-		memoryHelper.dump(systemOperational.m, 0, 15);
-		System.out.println("---------------------------------- após execucao ");
-		systemOperational.cpu.run();
-		memoryHelper.dump(systemOperational.m, 0, 15);
-	}
+//	public void fibonacci(){
+//		MemoryHelper memoryHelper = new MemoryHelper();
+//		Word[] p = new Programas().fibonacci;
+//		memoryHelper.carga(p, systemOperational.m);
+//		systemOperational.cpu.setContext(0);
+//		System.out.println("---------------------------------- programa carregado ");
+//		memoryHelper.dump(systemOperational.m, 0, 60);
+//		System.out.println("---------------------------------- após execucao ");
+//		systemOperational.cpu.run();
+//		memoryHelper.dump(systemOperational.m, 0, 60);
+//	}
 
 }
 

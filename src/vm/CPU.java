@@ -3,6 +3,7 @@ package vm;
 import vm.interruptions.SystemInterrupt;
 import vm.interruptions.list.InvalidRuleInterruption;
 import vm.interruptions.list.MemoryOutOfBoundsInterruption;
+import vm.memory.PCB;
 
 import java.util.Set;
 
@@ -12,6 +13,7 @@ public class CPU {
     private final int[] registries; //Registradores
     private final Word[] memory;   //vm.CPU acessa MEMORIA, guarda referencia 'm' a ela. memoria nao muda. ee sempre a mesma.
     private final Set<InstructionRule> instructionRules;
+    private PCB currentPCB;
 
     public CPU(SystemOperational systemOperational, Word[] memory, Set<InstructionRule> instructionRules) {     // ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
         this.memory = memory;                // usa o atributo 'm' para acessar a memoria.
@@ -33,6 +35,14 @@ public class CPU {
         return memory;
     }
 
+    public PCB getCurrentPCB() {
+        return currentPCB;
+    }
+
+    public void setCurrentPCB(PCB pcb) {
+        this.currentPCB = pcb;
+    }
+
     public void setContext(int pc) {  // no futuro esta funcao vai ter que ser
         this.programCounter = pc;                                              // limite e pc (deve ser zero nesta versao)
     }
@@ -49,7 +59,7 @@ public class CPU {
         // instruction register,
         Word instruction;
         while (true) { // ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
-            SystemInterrupt interrupt = null;
+            SystemInterrupt interrupt;
             if (programCounter > memory.length) {
                 interrupt = new MemoryOutOfBoundsInterruption(programCounter, memory.length);
             } else {
@@ -61,7 +71,7 @@ public class CPU {
                         break;
                     }
                 }
-                
+
             }
             if (interrupt != null) {
                 boolean shouldHalt = systemOperational.handleInterruption(this, interrupt);

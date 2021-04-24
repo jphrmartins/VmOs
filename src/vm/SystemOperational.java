@@ -3,6 +3,8 @@ package vm;
 import vm.instructionhandle.*;
 import vm.interruptions.InterruptionHandler;
 import vm.interruptions.SystemInterrupt;
+import vm.memory.PCB;
+import vm.programs.Program;
 
 import java.util.*;
 
@@ -10,15 +12,16 @@ import java.util.*;
 // -------------------------- atributos e construcao da vm.VM -----------------------------------------------
 public class SystemOperational {
     public int tamMem;
-    public Word[] m;
+    public Word[] memory;
     public CPU cpu;
     public InterruptionHandler interruptionHandler;
+    public List<PCB> readyList;
 
     public SystemOperational() {
         tamMem = 1024;
-        m = new Word[tamMem];
+        memory = new Word[tamMem];
         for (int i = 0; i < tamMem; i++) {
-            m[i] = Word.emptyWord();
+            memory[i] = Word.emptyWord();
         }
         this.interruptionHandler = new InterruptionHandler();
         Set<InstructionRule> instructionRules = new HashSet<>();
@@ -28,7 +31,11 @@ public class SystemOperational {
                 new LDDRule(), new STDRule(), new LDXRule(), new STXRule(), new SWAPRule(), new STOPRule(),
                 new InvalidRule(), new TRAPRule()
         );
-        cpu = new CPU(this, m, instructionRules);
+        cpu = new CPU(this, memory, instructionRules);
+    }
+
+    public int[] loadProgram(Program program) {
+        Word[] programWords =
     }
 
     public boolean handleInterruption(CPU cpu, SystemInterrupt interrupt) {
