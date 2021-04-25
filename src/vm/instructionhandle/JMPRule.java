@@ -1,7 +1,10 @@
 package vm.instructionhandle;
 
 import vm.*;
+import vm.interruptions.ProgramOutOfBoundsInterruption;
 import vm.interruptions.SystemInterrupt;
+
+import java.util.Optional;
 
 public class JMPRule implements InstructionRule {
     @Override
@@ -11,7 +14,11 @@ public class JMPRule implements InstructionRule {
 
     @Override
     public SystemInterrupt executeRule(CPU cpu, Word instruction) {
-        cpu.setContext(instruction.getP());
+        Optional<Integer> memoryPosition = cpu.getCurrentPCB().getMemoryPosition(instruction.getP());
+        if (memoryPosition.isEmpty()) {
+            return new ProgramOutOfBoundsInterruption(cpu.getCurrentPCB(), instruction.getP());
+        }
+        cpu.setContext(memoryPosition.get());
         return null;
     }
 }

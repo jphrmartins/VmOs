@@ -15,7 +15,7 @@ public class SystemCallHandler {
                 break;
         
             case 2:
-                new systemOutput().executeCall(cpu);;
+                new systemOutput().executeCall(cpu);
                 break;
             default:
                 return new InvalidTrapInterruption(reg8Content);

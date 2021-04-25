@@ -5,25 +5,36 @@ package vm;// PUCRS - Escola Politécnica - Sistemas Operacionais
 // Fase 1 - máquina virtual (vide enunciado correspondente)
 //
 
+import vm.memory.PCB;
 import vm.programs.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class Computer {
-	public SystemOperational systemOperational;
-    public Computer(){   // a vm.VM com tratamento de interrupções
-		 systemOperational = new SystemOperational();
-	}
-	public static void main(String args[]) {
-    	List<Program> programs = Arrays.asList(new Fibo(), new Factorial(),
-				new BubbleSort(), new SystemCallTest(), new InterruptTest());
-		Computer s = new Computer();
-		//s.fibonacci();
-		//s.fatorial();
-		//s.bubbleSortProgram();
-		//s.systemcallTest();
-	}
+    public SystemOperational systemOperational;
+
+    public Computer() {   // a vm.VM com tratamento de interrupções
+        systemOperational = new SystemOperational();
+    }
+
+    public static void main(String args[]) {
+        List<Program> programs = Arrays.asList(new Fibo(), new Factorial(),
+                new BubbleSort(), new SystemCallTest(), new InterruptTest());
+        Computer computer = new Computer();
+        programs.forEach(it -> {
+            Optional<PCB> pcb = computer.systemOperational.loadProgram(it);
+            if (pcb.isEmpty()) {
+                System.err.println("### Could not load program: " + it.getClass().getName() + " due less memory then required");
+            }
+        });
+        computer.systemOperational.start();
+        //s.fibonacci();
+        //s.fatorial();
+        //s.bubbleSortProgram();
+        //s.systemcallTest();
+    }
 
 //	public void fibonacci(){
 //		MemoryHelper memoryHelper = new MemoryHelper();

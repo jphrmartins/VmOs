@@ -1,8 +1,11 @@
 package vm.instructionhandle;
 
 import vm.*;
+import vm.interruptions.ProgramOutOfBoundsInterruption;
 import vm.interruptions.SystemInterrupt;
 import vm.interruptions.list.MemoryOutOfBoundsInterruption;
+
+import java.util.Optional;
 
 public class STDRule implements InstructionRule {
     @Override
@@ -15,7 +18,11 @@ public class STDRule implements InstructionRule {
         if(instruction.getP() < 0 || instruction.getP() > cpu.getMemory().length){
             return new MemoryOutOfBoundsInterruption(instruction.getP(), cpu.getMemory().length);
         }
-        cpu.getMemory()[instruction.getP()] = Word.newData(cpu.getRegistries()[instruction.getR1()]);
+        Optional<Integer> memoryPosition = cpu.getCurrentPCB().getMemoryPosition(instruction.getP());
+        if (memoryPosition.isEmpty()) {
+            return new ProgramOutOfBoundsInterruption(cpu.getCurrentPCB(), instruction.getP());
+        }
+        cpu.getMemory()[memoryPosition.get()] = Word.newData(cpu.getRegistries()[instruction.getR1()]);
         cpu.incrementPc();
         return null;
     }

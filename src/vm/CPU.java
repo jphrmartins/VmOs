@@ -1,8 +1,10 @@
 package vm;
 
+import vm.interruptions.ProgramChangeInterrupt;
 import vm.interruptions.SystemInterrupt;
 import vm.interruptions.list.InvalidRuleInterruption;
 import vm.interruptions.list.MemoryOutOfBoundsInterruption;
+import vm.memory.CPUState;
 import vm.memory.PCB;
 
 import java.util.Set;
@@ -10,7 +12,7 @@ import java.util.Set;
 public class CPU {
     private int programCounter;             // ... composto de program counter,
     private final SystemOperational systemOperational; //Pointer to the sysops
-    private final int[] registries; //Registradores
+    private int[] registries; //Registradores
     private final Word[] memory;   //vm.CPU acessa MEMORIA, guarda referencia 'm' a ela. memoria nao muda. ee sempre a mesma.
     private final Set<InstructionRule> instructionRules;
     private PCB currentPCB;
@@ -47,6 +49,10 @@ public class CPU {
         this.programCounter = pc;                                              // limite e pc (deve ser zero nesta versao)
     }
 
+    public int getProgramCounter() {
+        return programCounter;
+    }
+
     public SystemOperational getSystemPointer() {
         return this.systemOperational;
     }
@@ -60,6 +66,7 @@ public class CPU {
         Word instruction;
         while (true) { // ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
             SystemInterrupt interrupt;
+            int clockCycle = 1;
             if (programCounter > memory.length) {
                 interrupt = new MemoryOutOfBoundsInterruption(programCounter, memory.length);
             } else {
@@ -71,13 +78,26 @@ public class CPU {
                         break;
                     }
                 }
-
             }
             if (interrupt != null) {
-                boolean shouldHalt = systemOperational.handleInterruption(this, interrupt);
+                boolean shouldHalt = systemOperational.handleInterruption(interrupt);
                 if (shouldHalt) break; // break sai do loop da cpu
             }
+            if (clockCycle % 5 == 0) {
+                systemOperational.handleProgramChange(this);
+            }
+            clockCycle++;
         }
+    }
+
+    public void saveCurrentState() {
+        currentPCB.saveState(this);
+    }
+
+    public void loadStateOf(PCB nextPCB) {
+        CPUState state = nextPCB.getCpuState();
+        this.programCounter = state.getLastProgramCounter();
+        this.registries = state.getRegisters();
     }
 
     public static class Register {

@@ -1,6 +1,7 @@
 package vm.interruptions;
 
+import vm.SystemOperational;
+
 public interface SystemInterrupt {
-    String getReason();
-    boolean shouldHalt();
+    boolean handleInterrupt(SystemOperational systemOperational);
 }

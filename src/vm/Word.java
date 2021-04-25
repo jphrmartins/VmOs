@@ -33,6 +33,9 @@ public class Word {    // cada posicao da memoria tem uma instrucao (ou um dado)
         return new Word(this.opc, this.r1, this.r2, this.p);
     }
 
+    public boolean isEmptyWord() {
+        return this.opc == Opcode.NULL;
+    }
 
     public Opcode getOpc() {
         return opc;
