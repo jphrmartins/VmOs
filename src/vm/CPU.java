@@ -1,6 +1,5 @@
 package vm;
 
-import vm.interruptions.ProgramChangeInterrupt;
 import vm.interruptions.SystemInterrupt;
 import vm.interruptions.list.InvalidRuleInterruption;
 import vm.interruptions.list.MemoryOutOfBoundsInterruption;
