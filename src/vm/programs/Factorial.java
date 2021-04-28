@@ -4,7 +4,6 @@ import vm.Opcode;
 import vm.Word;
 
 import static vm.CPU.Register.*;
-import static vm.CPU.Register.ANY;
 
 public class Factorial implements Program {
     @Override

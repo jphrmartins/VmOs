@@ -1,7 +1,6 @@
 package vm.interruptions.list;
 
 import vm.interruptions.HaltInterruption;
-import vm.interruptions.SystemInterrupt;
 
 public class MemoryOutOfBoundsInterruption extends HaltInterruption {
     public MemoryOutOfBoundsInterruption(int programCounter, int memorySize) {

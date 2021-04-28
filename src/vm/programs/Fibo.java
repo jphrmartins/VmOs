@@ -4,7 +4,6 @@ import vm.Opcode;
 import vm.Word;
 
 import static vm.CPU.Register.*;
-import static vm.CPU.Register.ANY;
 
 public class Fibo implements Program {
     @Override

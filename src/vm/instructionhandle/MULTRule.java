@@ -1,6 +1,9 @@
 package vm.instructionhandle;
 
-import vm.*;
+import vm.CPU;
+import vm.InstructionRule;
+import vm.Opcode;
+import vm.Word;
 import vm.interruptions.SystemInterrupt;
 
 public class MULTRule implements InstructionRule {

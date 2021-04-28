@@ -7,7 +7,6 @@ import vm.memory.PCB;
 import vm.programs.Program;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 // ------------------- V M  - constituida de vm.CPU e MEMORIA -----------------------------------------------
 // -------------------------- atributos e construcao da vm.VM -----------------------------------------------

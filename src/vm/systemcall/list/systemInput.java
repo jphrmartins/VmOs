@@ -1,8 +1,8 @@
 package vm.systemcall.list;
 
 import vm.CPU;
-import vm.Word;
 import vm.systemcall.SystemCall;
+
 import java.util.Scanner;
 
 public class systemInput implements SystemCall {

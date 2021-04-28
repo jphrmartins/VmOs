@@ -1,14 +1,9 @@
 package vm.programs;
 
-import static vm.CPU.Register.ANY;
-import static vm.CPU.Register.R1;
-import static vm.CPU.Register.R2;
-import static vm.CPU.Register.R3;
-import static vm.CPU.Register.R4;
-import static vm.CPU.Register.R5;
-
 import vm.Opcode;
 import vm.Word;
+
+import static vm.CPU.Register.*;
 
 public class BubbleSort implements Program {
     @Override

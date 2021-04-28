@@ -1,9 +1,12 @@
 package vm.instructionhandle;
 
-import vm.*;
-import vm.interruptions.list.ProgramOutOfBoundsInterruption;
+import vm.CPU;
+import vm.InstructionRule;
+import vm.Opcode;
+import vm.Word;
 import vm.interruptions.SystemInterrupt;
 import vm.interruptions.list.MemoryOutOfBoundsInterruption;
+import vm.interruptions.list.ProgramOutOfBoundsInterruption;
 
 import java.util.Optional;
 
