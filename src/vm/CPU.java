@@ -3,6 +3,7 @@ package vm;
 import vm.interruptions.SystemInterrupt;
 import vm.interruptions.list.InvalidRuleInterruption;
 import vm.interruptions.list.MemoryOutOfBoundsInterruption;
+import vm.interruptions.list.ProgramOutOfBoundsInterruption;
 import vm.memory.CPUState;
 import vm.memory.PCB;
 
@@ -67,10 +68,13 @@ public class CPU {
         int clockCycle = 1;
         while (true) { // ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
             SystemInterrupt interrupt;
+            Optional<Integer> programCounterPosition = currentPCB.getMemoryPosition(programCounter);
             if (programCounter > memory.length) {
                 interrupt = new MemoryOutOfBoundsInterruption(programCounter, memory.length);
+            } else if (programCounterPosition.isEmpty()) {
+                interrupt = new ProgramOutOfBoundsInterruption(currentPCB, programCounter);
             } else {
-                instruction = memory[programCounter];    // busca posicao da memoria apontada por pc, guarda em instruction
+                instruction = memory[programCounterPosition.get()];    // busca posicao da memoria apontada por pc, guarda em instruction
                 interrupt = new InvalidRuleInterruption(instruction.getOpc());
                 for (InstructionRule rule : instructionRules) {
                     if (rule.shouldExecute(instruction.getOpc())) {
@@ -96,8 +100,11 @@ public class CPU {
 
     public void loadStateOf(PCB nextPCB) {
         CPUState state = nextPCB.getCpuState();
-        this.programCounter = state.getLastProgramCounter();
-        this.registries = state.getRegisters();
+        this.currentPCB = nextPCB;
+        this.programCounter = currentPCB.getCurrentProgramCounter();
+        if (state != null) {
+            this.registries = state.getRegisters();
+        }
     }
 
     public static class Register {

@@ -26,11 +26,13 @@ public class PCB {
         return allocatedFrames;
     }
 
+    //@TODO - O PAGE NÃO É O VALOR NA MEMORIA O ANIMAL... É O INDICE DO ALLOCATED.. :NUKE-PALM:
+    //ass: jp, código feito por: jp, um animal...
     public Optional<Integer> getMemoryPosition(int programMemoryPointer) {
         int page = programMemoryPointer / pageSize;
         if (!inPageRange(page)) return Optional.empty();
         int offset = programMemoryPointer % pageSize;
-        return Optional.of(allocatedFrames[page] * pageSize + offset);
+        return Optional.of(page * pageSize + offset);
     }
 
     private boolean inPageRange(int page) {

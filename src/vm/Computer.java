@@ -23,7 +23,7 @@ public class Computer {
     }
 
     public static void main(String args[]) {
-        List<Program> programs = Arrays.asList(new BubbleSort());
+        List<Program> programs = Arrays.asList(new BubbleSort(), new ProgMinimo());
         Computer computer = new Computer();
         programs.forEach(it -> {
             Optional<PCB> pcb = computer.systemOperational.loadProgram(it);
