@@ -2,20 +2,15 @@ package vm.interruptions.list;
 
 import vm.SystemOperational;
 import vm.interruptions.SystemInterrupt;
+import vm.memory.PCB;
 
 public class StopInterruption implements SystemInterrupt {
     @Override
-    public String getReason() {
-        return "STOP word called";
-    }
-
-    @Override
-    public boolean shouldHalt() {
-        return true;
-    }
-
-    @Override
     public boolean handleInterrupt(SystemOperational systemOperational) {
-        return false;
+        System.out.println("STOP code was called, Will remove program from memory");
+        PCB currentPCB = systemOperational.cpu.getCurrentPCB();
+        systemOperational.readyList.remove(currentPCB);
+        systemOperational.unloadProgram(currentPCB);
+        return true;
     }
 }

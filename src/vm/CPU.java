@@ -63,9 +63,9 @@ public class CPU {
     public void run() {        // execucao da vm.CPU supoe que o contexto da vm.CPU, vide acima, esta devidamente setado
         // instruction register,
         Word instruction;
+        int clockCycle = 1;
         while (true) { // ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
             SystemInterrupt interrupt;
-            int clockCycle = 1;
             if (programCounter > memory.length) {
                 interrupt = new MemoryOutOfBoundsInterruption(programCounter, memory.length);
             } else {

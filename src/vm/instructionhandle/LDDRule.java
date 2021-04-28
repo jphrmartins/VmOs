@@ -1,7 +1,7 @@
 package vm.instructionhandle;
 
 import vm.*;
-import vm.interruptions.ProgramOutOfBoundsInterruption;
+import vm.interruptions.list.ProgramOutOfBoundsInterruption;
 import vm.interruptions.SystemInterrupt;
 import vm.interruptions.list.MemoryOutOfBoundsInterruption;
 

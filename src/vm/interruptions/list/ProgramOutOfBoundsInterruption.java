@@ -1,22 +1,10 @@
-package vm.interruptions;
+package vm.interruptions.list;
 
+import vm.interruptions.HaltInterruption;
 import vm.memory.PCB;
 
-public class ProgramOutOfBoundsInterruption implements SystemInterrupt {
-    private final String programName;
-    private final int invalidPostion;
+public class ProgramOutOfBoundsInterruption extends HaltInterruption {
     public ProgramOutOfBoundsInterruption(PCB currentPCB, int registerValue) {
-        programName = currentPCB.getClass().getName();
-        invalidPostion = registerValue;
-    }
-
-    @Override
-    public String getReason() {
-        return "Memory Position: " + invalidPostion + " is not in program: " + programName + " range";
-    }
-
-    @Override
-    public boolean shouldHalt() {
-        return true;
+        super("Memory Position: " + registerValue + " is not in program: " + currentPCB.getClass().getName() + " range");
     }
 }

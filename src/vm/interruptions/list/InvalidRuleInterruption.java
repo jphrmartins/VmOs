@@ -1,21 +1,10 @@
 package vm.interruptions.list;
 
 import vm.Opcode;
-import vm.interruptions.SystemInterrupt;
+import vm.interruptions.HaltInterruption;
 
-public class InvalidRuleInterruption implements SystemInterrupt {
-    private final Opcode opcode;
+public class InvalidRuleInterruption extends HaltInterruption {
     public InvalidRuleInterruption(Opcode opcode) {
-        this.opcode = opcode;
-    }
-
-    @Override
-    public String getReason() {
-        return "Should not call word instruction of type: " + opcode.name();
-    }
-
-    @Override
-    public boolean shouldHalt() {
-        return true;
+        super("Should not call word instruction of type: " + opcode.name());
     }
 }

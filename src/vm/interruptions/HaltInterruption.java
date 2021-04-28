@@ -1,10 +1,9 @@
-package vm.interruptions.list;
+package vm.interruptions;
 
 import vm.SystemOperational;
-import vm.interruptions.SystemInterrupt;
 
 public abstract class HaltInterruption implements SystemInterrupt {
-    private String reason;
+    private final String reason;
 
     public HaltInterruption(String reason) {
         this.reason = reason;
