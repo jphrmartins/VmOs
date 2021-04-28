@@ -53,4 +53,8 @@ public class Word {    // cada posicao da memoria tem uma instrucao (ou um dado)
         return p;
     }
 
+    @Override
+    public String toString() {
+        return "Word{opc=" + opc + ", r1=" + r1 + ", r2=" + r2 + ", p=" + p + '}';
+    }
 }

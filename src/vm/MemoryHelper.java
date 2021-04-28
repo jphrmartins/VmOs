@@ -21,10 +21,4 @@ public class MemoryHelper {
             dump(m[i]);
         }
     }
-
-    public void carga(Word[] program, Word[] memory) {
-        for (int i = 0; i < program.length; i++) {
-            memory[i] = program[i].clone();
-        }
-    }
 }

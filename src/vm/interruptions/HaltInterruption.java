@@ -12,7 +12,7 @@ public abstract class HaltInterruption implements SystemInterrupt {
     @Override
     public boolean handleInterrupt(SystemOperational systemOperational) {
         System.out.print(this.getClass().getName() + " happen due to " + reason);
-        System.out.println("Halting System");
+        System.out.println(" Halting System");
         return true;
     }
 }
