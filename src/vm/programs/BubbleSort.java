@@ -1,10 +1,14 @@
 package vm.programs;
 
+import static vm.CPU.Register.ANY;
+import static vm.CPU.Register.R1;
+import static vm.CPU.Register.R2;
+import static vm.CPU.Register.R3;
+import static vm.CPU.Register.R4;
+import static vm.CPU.Register.R5;
+
 import vm.Opcode;
 import vm.Word;
-
-import static vm.CPU.Register.*;
-import static vm.CPU.Register.ANY;
 
 public class BubbleSort implements Program {
     @Override
@@ -61,7 +65,32 @@ public class BubbleSort implements Program {
                 new Word(Opcode.LDI, R5, ANY, 19), //carregando com PC do loop_i
                 new Word(Opcode.JMPIG, R5, R4, -1), //R4 > 0? pula pra loop_i : continua;
                 //fim do loop_i
-                new Word(Opcode.STOP, ANY, ANY, -1)
+                new Word(Opcode.STOP, ANY, ANY, -1),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord()
         };
     }
 }
