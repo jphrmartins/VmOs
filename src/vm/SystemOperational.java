@@ -11,8 +11,9 @@ import java.util.*;
 // ------------------- V M  - constituida de vm.CPU e MEMORIA -----------------------------------------------
 // -------------------------- atributos e construcao da vm.VM -----------------------------------------------
 public class SystemOperational {
-    private static final Integer FRAME_SIZE = 16;
+    private static final Integer FRAME_SIZE = 64;
     private final List<Frame> framesIndex;
+    private final Integer wordsPerFrame;
     public int tamMem;
     public Word[] memory;
     public CPU cpu;
@@ -20,6 +21,7 @@ public class SystemOperational {
 
     public SystemOperational() {
         tamMem = 1024;
+        wordsPerFrame = tamMem / 64;
         readyList = new ArrayList<>();
         memory = new Word[tamMem];
         for (int i = 0; i < tamMem; i++) {
@@ -39,14 +41,16 @@ public class SystemOperational {
     public Optional<PCB> loadProgram(Program program) {
         Word[] programWords = program.createProgram();
         int programWordIndex = 0;
-        int frameLength = programWords.length / FRAME_SIZE;
-        int[] allocatedFrames = new int[frameLength];
+        int pagesNeeds = (int) Math.ceil(programWords.length / (wordsPerFrame * 1.0));
+        int[] allocatedFrames = new int[pagesNeeds];
+        Arrays.fill(allocatedFrames, -1);
         int currentPage = 0;
         int availableFrames = getAvailableIndex();
-        if (availableFrames < frameLength) return Optional.empty();
+        if (availableFrames < pagesNeeds) return Optional.empty();
         for (Frame frame : framesIndex) {
+            if (currentPage >= allocatedFrames.length) break;
             if (!frame.isAllocated()) {
-                for (int i = frame.getStartIndex(); i < frame.getLastIndex(); i++) {
+                for (int i = frame.getStartIndex(); i <= frame.getLastIndex(); i++) {
                     if (programWordIndex >= programWords.length) {
                         break;
                     }
@@ -57,9 +61,9 @@ public class SystemOperational {
                 allocatedFrames[currentPage++] = frame.getFrameId();
             }
         }
-        PCB pcb = new PCB(allocatedFrames, FRAME_SIZE);
+        PCB pcb = new PCB(allocatedFrames, wordsPerFrame);
         readyList.add(pcb);
-        return Optional.of(new PCB(allocatedFrames, FRAME_SIZE));
+        return Optional.of(pcb);
     }
 
     public boolean unloadProgram(PCB pcb) {
@@ -75,7 +79,6 @@ public class SystemOperational {
     }
 
     private List<Frame> getFrames() {
-        int wordsPerFrame = tamMem / FRAME_SIZE;
         List<Frame> frames = new ArrayList<>();
         for (int i = 0; i < memory.length; i = i + wordsPerFrame) {
             frames.add(new Frame(i, i + wordsPerFrame - 1));
@@ -96,11 +99,19 @@ public class SystemOperational {
     }
 
     public void start() {
-        for (int i = 0; i < readyList.size(); i++) {
+        int programs = readyList.size();
+        for (int i = 0; i < programs || !readyList.isEmpty() ; i++) {
             PCB pcb = readyList.remove(0);
             cpu.setCurrentPCB(pcb);
             cpu.setContext(pcb.getCurrentProgramCounter());
             cpu.run();
+        }
+        dump();
+    }
+
+    private void dump() {
+        for (int i = 0; i < memory.length; i++) {
+            System.out.println(i + " - " + memory[i]);
         }
     }
 }

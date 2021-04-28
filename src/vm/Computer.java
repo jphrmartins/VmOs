@@ -1,9 +1,4 @@
 package vm;// PUCRS - Escola Politécnica - Sistemas Operacionais
-// Prof. Fernando Dotti
-// Código fornecido como parte da solução do projeto de Sistemas Operacionais
-//
-// Fase 1 - máquina virtual (vide enunciado correspondente)
-//
 
 import vm.memory.PCB;
 import vm.programs.*;
@@ -11,7 +6,15 @@ import vm.programs.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+/*
+@TODO
+- Rodar um dump mais esperto, ao final do STOP rodar o dump do programa executado
+- Dump final (da memoria toda) jogar para algum arquivo, para melhor visualização.
 
+- Quem sabe fazer um consolezinho pro cara carregar os programas deles em memoria, ser mais iterativo
+- Carregar programas para a memoria lendo de um arquivo
+- Calcular espaço necessário para o espaço em memoria / usar um valor fixo :think:
+ */
 public class Computer {
     public SystemOperational systemOperational;
 
@@ -20,8 +23,7 @@ public class Computer {
     }
 
     public static void main(String args[]) {
-        List<Program> programs = Arrays.asList(new Fibo(), new Factorial(),
-                new BubbleSort(), new SystemCallTest(), new InterruptTest());
+        List<Program> programs = Arrays.asList(new BubbleSort());
         Computer computer = new Computer();
         programs.forEach(it -> {
             Optional<PCB> pcb = computer.systemOperational.loadProgram(it);
@@ -30,23 +32,6 @@ public class Computer {
             }
         });
         computer.systemOperational.start();
-        //s.fibonacci();
-        //s.fatorial();
-        //s.bubbleSortProgram();
-        //s.systemcallTest();
     }
-
-//	public void fibonacci(){
-//		MemoryHelper memoryHelper = new MemoryHelper();
-//		Word[] p = new Programas().fibonacci;
-//		memoryHelper.carga(p, systemOperational.m);
-//		systemOperational.cpu.setContext(0);
-//		System.out.println("---------------------------------- programa carregado ");
-//		memoryHelper.dump(systemOperational.m, 0, 60);
-//		System.out.println("---------------------------------- após execucao ");
-//		systemOperational.cpu.run();
-//		memoryHelper.dump(systemOperational.m, 0, 60);
-//	}
-
 }
 

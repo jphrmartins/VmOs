@@ -6,6 +6,7 @@ import vm.interruptions.list.MemoryOutOfBoundsInterruption;
 import vm.memory.CPUState;
 import vm.memory.PCB;
 
+import java.util.Optional;
 import java.util.Set;
 
 public class CPU {
