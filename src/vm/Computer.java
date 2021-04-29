@@ -6,6 +6,7 @@ import vm.programs.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
 /*
 @TODO
 - Rodar um dump mais esperto, ao final do STOP rodar o dump do programa executado
@@ -23,7 +24,9 @@ public class Computer {
     }
 
     public static void main(String args[]) {
-        List<Program> programs = Arrays.asList(new BubbleSort(), new ProgMinimo());
+        //List<Program> programs = Arrays.asList(new Fibo(), new Factorial(),
+        //        new BubbleSort(), new SystemCallTest(), new InterruptTest());
+        List<Program> programs = Arrays.asList(new SystemCallTest());
         Computer computer = new Computer();
         programs.forEach(it -> {
             Optional<PCB> pcb = computer.systemOperational.loadProgram(it);

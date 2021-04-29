@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class CPU {
+    private static final Integer REGISTER_LENGTH = 9;
     private int programCounter;             // ... composto de program counter,
     private final SystemOperational systemOperational; //Pointer to the sysops
     private int[] registries; //Registradores
@@ -20,7 +21,7 @@ public class CPU {
 
     public CPU(SystemOperational systemOperational, Word[] memory, Set<InstructionRule> instructionRules) {     // ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
         this.memory = memory;                // usa o atributo 'm' para acessar a memoria.
-        registries = new int[9];     // aloca o espaço dos registradores
+        registries = new int[REGISTER_LENGTH];     // aloca o espaço dos registradores
         this.instructionRules = instructionRules;
         this.systemOperational = systemOperational;
     }
@@ -104,6 +105,8 @@ public class CPU {
         this.programCounter = currentPCB.getCurrentProgramCounter();
         if (state != null) {
             this.registries = state.getRegisters();
+        } else {
+            this.registries = new int[REGISTER_LENGTH];
         }
     }
 

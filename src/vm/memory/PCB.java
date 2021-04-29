@@ -30,17 +30,14 @@ public class PCB {
     //ass: jp, código feito por: jp, um animal...
     public Optional<Integer> getMemoryPosition(int programMemoryPointer) {
         int page = programMemoryPointer / pageSize;
-        if (!inPageRange(page)) return Optional.empty();
+        if (page >= allocatedFrames.length) return Optional.empty();
         int offset = programMemoryPointer % pageSize;
-        return Optional.of(page * pageSize + offset);
-    }
-
-    private boolean inPageRange(int page) {
-        return Arrays.stream(allocatedFrames).anyMatch(it -> it == page);
+        return Optional.of(allocatedFrames[page] * pageSize + offset);
     }
 
     public void saveState(CPU cpu) {
-        cpuState = new CPUState(cpu.getProgramCounter(), cpu.getRegistries());
+        int[] registers = Arrays.copyOf(cpu.getRegistries(), cpu.getRegistries().length);
+        cpuState = new CPUState(cpu.getProgramCounter(), registers);
     }
 
     public CPUState getCpuState() {
@@ -50,6 +47,6 @@ public class PCB {
     public int getCurrentProgramCounter() {
         return cpuState != null
                 ? cpuState.getLastProgramCounter()
-                : allocatedFrames[0] * pageSize;
+                : 0;
     }
 }

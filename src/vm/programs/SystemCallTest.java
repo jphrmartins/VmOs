@@ -12,7 +12,8 @@ public class SystemCallTest implements Program {
                 new Word(Opcode.LDI, R8, ANY, 1),
                 new Word(Opcode.TRAP, R8, R9, -1),
                 new Word(Opcode.LDI, R8, ANY, 2),
-                new Word(Opcode.TRAP, R8, R9, -1)
+                new Word(Opcode.TRAP, R8, R9, -1),
+                Word.stop()
         };
     }
 }

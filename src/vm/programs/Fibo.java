@@ -42,7 +42,7 @@ public class Fibo implements Program {
 
                 new Word(Opcode.STD, R5, ANY, 50), // armazena na memoria 60 o valor do r4, no caso -1					MEMORIA[30] = r1
 
-                new Word(Opcode.STOP, ANY, ANY, -1)
+                Word.stop()
         };
     }
 }

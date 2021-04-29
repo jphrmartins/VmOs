@@ -32,7 +32,18 @@ public class Factorial implements Program {
                 new Word(Opcode.LDI, R1, ANY, -1), // coloca -1 em r1
                 //final
                 new Word(Opcode.STD, R1, ANY, 23), // armazena na memoria 0 o valor do r1, no caso -1					MEMORIA[30] = r1
-                new Word(Opcode.STOP, ANY, ANY, -1)
+                Word.stop(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord()
         };
     }
 }

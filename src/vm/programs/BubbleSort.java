@@ -60,7 +60,7 @@ public class BubbleSort implements Program {
                 new Word(Opcode.LDI, R5, ANY, 19), //carregando com PC do loop_i
                 new Word(Opcode.JMPIG, R5, R4, -1), //R4 > 0? pula pra loop_i : continua;
                 //fim do loop_i
-                new Word(Opcode.STOP, ANY, ANY, -1),
+                Word.stop(),
                 Word.emptyWord(),
                 Word.emptyWord(),
                 Word.emptyWord(),

@@ -14,7 +14,10 @@ public class InterruptTest implements Program {
                 new Word(Opcode.STD, R1, ANY, 10),
                 new Word(Opcode.JMP, ANY, ANY, 9999),
                 new Word(Opcode.STD, R1, ANY, 11),
-                new Word(Opcode.STOP, ANY, ANY, -1)
+                Word.stop(),
+                Word.emptyWord(),
+                Word.emptyWord(),
+                Word.emptyWord()
         };
     }
 }
