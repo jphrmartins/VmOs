@@ -13,6 +13,7 @@ import java.util.Set;
 public class CPU {
     private static final Integer REGISTER_LENGTH = 9;
     private int programCounter;             // ... composto de program counter,
+    private int clockCycle;
     private final SystemOperational systemOperational; //Pointer to the sysops
     private int[] registries; //Registradores
     private final Word[] memory;   //vm.CPU acessa MEMORIA, guarda referencia 'm' a ela. memoria nao muda. ee sempre a mesma.
@@ -21,6 +22,7 @@ public class CPU {
 
     public CPU(SystemOperational systemOperational, Word[] memory, Set<InstructionRule> instructionRules) {     // ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
         this.memory = memory;                // usa o atributo 'm' para acessar a memoria.
+        clockCycle = 1;
         registries = new int[REGISTER_LENGTH];     // aloca o espaço dos registradores
         this.instructionRules = instructionRules;
         this.systemOperational = systemOperational;
@@ -44,7 +46,7 @@ public class CPU {
     }
 
     public void setCurrentPCB(PCB pcb) {
-        this.currentPCB = pcb;
+        loadStateOf(pcb);
     }
 
     public void setContext(int pc) {  // no futuro esta funcao vai ter que ser
@@ -66,7 +68,6 @@ public class CPU {
     public void run() {        // execucao da vm.CPU supoe que o contexto da vm.CPU, vide acima, esta devidamente setado
         // instruction register,
         Word instruction;
-        int clockCycle = 1;
         while (true) { // ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
             SystemInterrupt interrupt;
             Optional<Integer> programCounterPosition = currentPCB.getMemoryPosition(programCounter);
@@ -90,7 +91,7 @@ public class CPU {
             }
             if (clockCycle % 5 == 0) {
                 systemOperational.handleProgramChange(this);
-            }
+           }
             clockCycle++;
         }
     }

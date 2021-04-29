@@ -24,7 +24,7 @@ public class JMPIGRule implements InstructionRule {
             return new ProgramOutOfBoundsInterruption(cpu.getCurrentPCB(), registerValue);
         }
         if (cpu.getRegistries()[instruction.getR2()] > 0) {
-            cpu.setContext(memoryPosition.get());
+            cpu.setContext(registerValue);
         } else {
             cpu.incrementPc();
         }

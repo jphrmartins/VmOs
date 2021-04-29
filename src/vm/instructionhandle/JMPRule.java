@@ -21,7 +21,7 @@ public class JMPRule implements InstructionRule {
         if (memoryPosition.isEmpty()) {
             return new ProgramOutOfBoundsInterruption(cpu.getCurrentPCB(), instruction.getP());
         }
-        cpu.setContext(memoryPosition.get());
+        cpu.setContext(instruction.getP());
         return null;
     }
 }

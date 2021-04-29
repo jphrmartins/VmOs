@@ -22,7 +22,7 @@ public class JMPIRule implements InstructionRule {
         if (memoryPosition.isEmpty()) {
             return new ProgramOutOfBoundsInterruption(cpu.getCurrentPCB(), registerValue);
         }
-        cpu.setContext(memoryPosition.get());
+        cpu.setContext(registerValue);
         return null;
     }
 }

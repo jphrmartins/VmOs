@@ -10,23 +10,21 @@ import java.util.Optional;
 /*
 @TODO
 - Rodar um dump mais esperto, ao final do STOP rodar o dump do programa executado
-- Dump final (da memoria toda) jogar para algum arquivo, para melhor visualização.
 
 - Quem sabe fazer um consolezinho pro cara carregar os programas deles em memoria, ser mais iterativo
+    - Se tiver console, informar quando quer dump na tela ou então em um arquivo.
 - Carregar programas para a memoria lendo de um arquivo
-- Calcular espaço necessário para o espaço em memoria / usar um valor fixo :think:
  */
 public class Computer {
     public SystemOperational systemOperational;
 
-    public Computer() {   // a vm.VM com tratamento de interrupções
+    public Computer() {
         systemOperational = new SystemOperational();
     }
 
     public static void main(String args[]) {
-        //List<Program> programs = Arrays.asList(new Fibo(), new Factorial(),
-        //        new BubbleSort(), new SystemCallTest(), new InterruptTest());
-        List<Program> programs = Arrays.asList(new SystemCallTest());
+        List<Program> programs = Arrays.asList(new Fibo(), new Factorial(), new BubbleSort(), new SystemCallTest(), new InterruptTest());
+        //List<Program> programs = Arrays.asList(new Fibo());
         Computer computer = new Computer();
         programs.forEach(it -> {
             Optional<PCB> pcb = computer.systemOperational.loadProgram(it);

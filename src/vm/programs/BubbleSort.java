@@ -5,9 +5,13 @@ import vm.Word;
 
 import static vm.CPU.Register.*;
 
-public class BubbleSort implements Program {
+public class BubbleSort extends Program {
+    public BubbleSort() {
+        super(6);
+    }
+
     @Override
-    public Word[] createProgram() {
+    public Word[] loadProgramWords() {
         return new Word[]{
                 new Word(Opcode.LDI, R1, ANY, 15),
                 new Word(Opcode.STD, R1, ANY, 60), //inicio do vetor na memoria[60]
@@ -61,31 +65,6 @@ public class BubbleSort implements Program {
                 new Word(Opcode.JMPIG, R5, R4, -1), //R4 > 0? pula pra loop_i : continua;
                 //fim do loop_i
                 Word.stop(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord()
         };
     }
 }

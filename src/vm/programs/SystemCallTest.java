@@ -5,9 +5,13 @@ import vm.Word;
 
 import static vm.CPU.Register.*;
 
-public class SystemCallTest implements Program {
+public class SystemCallTest extends Program {
+    public SystemCallTest() {
+        super(1);
+    }
+
     @Override
-    public Word[] createProgram() {
+    public Word[] loadProgramWords() {
         return new Word[]{
                 new Word(Opcode.LDI, R8, ANY, 1),
                 new Word(Opcode.TRAP, R8, R9, -1),

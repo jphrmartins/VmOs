@@ -6,6 +6,9 @@ import vm.memory.Frame;
 import vm.memory.PCB;
 import vm.programs.Program;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 // ------------------- V M  - constituida de vm.CPU e MEMORIA -----------------------------------------------
@@ -21,7 +24,7 @@ public class SystemOperational {
 
     public SystemOperational() {
         tamMem = 1024;
-        wordsPerFrame = tamMem / 64;
+        wordsPerFrame = tamMem / FRAME_SIZE;
         readyList = new ArrayList<>();
         memory = new Word[tamMem];
         for (int i = 0; i < tamMem; i++) {
@@ -39,7 +42,7 @@ public class SystemOperational {
     }
 
     public Optional<PCB> loadProgram(Program program) {
-        Word[] programWords = program.createProgram();
+        Word[] programWords = program.createProgram(wordsPerFrame);
         int programWordIndex = 0;
         int pagesNeeds = (int) Math.ceil(programWords.length / (wordsPerFrame * 1.0));
         int[] allocatedFrames = new int[pagesNeeds];
@@ -61,7 +64,7 @@ public class SystemOperational {
                 allocatedFrames[currentPage++] = frame.getFrameId();
             }
         }
-        PCB pcb = new PCB(allocatedFrames, wordsPerFrame);
+        PCB pcb = new PCB(program.getClass().getSimpleName(), allocatedFrames, wordsPerFrame);
         readyList.add(pcb);
         return Optional.of(pcb);
     }
@@ -103,15 +106,21 @@ public class SystemOperational {
         for (int i = 0; i < programs || !readyList.isEmpty() ; i++) {
             PCB pcb = readyList.remove(0);
             cpu.setCurrentPCB(pcb);
-            cpu.setContext(pcb.getCurrentProgramCounter());
             cpu.run();
         }
-        dump();
+       dumpToFile();
     }
 
-    private void dump() {
-        for (int i = 0; i < memory.length; i++) {
-            System.out.println(i + " - " + memory[i]);
+    private void dumpToFile() {
+        File file = new File("MemoryDump.txt");
+        try {
+            PrintWriter printWriter = new PrintWriter(file);
+            for (int i = 0; i < memory.length; i++) {
+                printWriter.println(i + " - " + memory[i]);
+            }
+            printWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

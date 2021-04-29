@@ -5,9 +5,13 @@ import vm.Word;
 
 import static vm.CPU.Register.*;
 
-public class Fibo implements Program {
+public class Fibo extends Program {
+    public Fibo() {
+        super(6);
+    }
+
     @Override
-    public Word[] createProgram() {
+    public Word[] loadProgramWords() {
         return new Word[]{
                 // Se quiser ver o fibonacci ate outro valor, altere o K na primeira linha (no caso o 10),  memoria de saida comeca no 50 e termina no 99
                 new Word(Opcode.LDI, R2, ANY, 10), // poe valor no r1														r1 =5
@@ -26,7 +30,6 @@ public class Fibo implements Program {
                 new Word(Opcode.JMPIE, R7, R8, -1), // se r7==0 pc = r6
                 new Word(Opcode.STD, R3, ANY, 51), // memoria[61] = r2
                 new Word(Opcode.SUBI, R8, ANY, 1),  // r7=r7-1
-
                 new Word(Opcode.JMPIE, R7, R8, -1), // se r7==0 pc = r6
                 new Word(Opcode.LDI, R5, ANY, 16),  // r4 = 7
                 new Word(Opcode.LDI, R4, ANY, 0),  // r3=0
@@ -39,10 +42,8 @@ public class Fibo implements Program {
                 new Word(Opcode.SUBI, R8, ANY, 1),  // r7=r7-1
                 new Word(Opcode.JMPIG, R5, R8, -1), // se r7>0 pc = r4
                 new Word(Opcode.JMPIE, R7, R8, -1), // se r7==0 pc = r6
-
                 new Word(Opcode.STD, R5, ANY, 50), // armazena na memoria 60 o valor do r4, no caso -1					MEMORIA[30] = r1
-
-                Word.stop()
+                Word.stop(),
         };
     }
 }

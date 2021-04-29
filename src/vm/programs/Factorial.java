@@ -5,9 +5,13 @@ import vm.Word;
 
 import static vm.CPU.Register.*;
 
-public class Factorial implements Program {
+public class Factorial extends Program {
+    public Factorial() {
+        super(5);
+    }
+
     @Override
-    public Word[] createProgram() {
+    public Word[] loadProgramWords() {
         return new Word[]{
                 new Word(Opcode.LDI, R1, ANY, 5), // poe valor no r1												1 		r1 =5
                 new Word(Opcode.STD, R1, ANY, 29), // memoria[29] = r1                                           2
@@ -33,17 +37,6 @@ public class Factorial implements Program {
                 //final
                 new Word(Opcode.STD, R1, ANY, 23), // armazena na memoria 0 o valor do r1, no caso -1					MEMORIA[30] = r1
                 Word.stop(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord()
         };
     }
 }

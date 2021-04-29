@@ -6,20 +6,18 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class PCB {
-    private static Integer PCB_GLOBAL_PID = 0;
-    private final int pid;
+    //private static Integer PCB_GLOBAL_PID = 0;
+    //private final int pid;
+    private final String programName;
     private final Integer pageSize;
     private CPUState cpuState;
     private final int[] allocatedFrames;
 
-    public PCB(int[] allocatedFrames, int pageSize) {
-        pid = PCB_GLOBAL_PID++;
+    public PCB(String programName, int[] allocatedFrames, int pageSize) {
+        //this.pid = PCB_GLOBAL_PID++;
+        this.programName = programName;
         this.pageSize = pageSize;
         this.allocatedFrames = allocatedFrames;
-    }
-
-    public int getPid() {
-        return pid;
     }
 
     public int[] getAllocatedFrames() {
@@ -33,6 +31,10 @@ public class PCB {
         if (page >= allocatedFrames.length) return Optional.empty();
         int offset = programMemoryPointer % pageSize;
         return Optional.of(allocatedFrames[page] * pageSize + offset);
+    }
+
+    public String getProgramName() {
+        return programName;
     }
 
     public void saveState(CPU cpu) {

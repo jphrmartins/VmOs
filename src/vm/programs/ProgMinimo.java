@@ -6,10 +6,14 @@ import static vm.CPU.Register.R1;
 import vm.Opcode;
 import vm.Word;
 
-public class ProgMinimo implements Program {
+public class ProgMinimo extends Program {
+
+    public ProgMinimo() {
+        super(2);
+    }
 
     @Override
-    public Word[] createProgram() {
+    public Word[] loadProgramWords() {
         return new Word[]{
                 new Word(Opcode.LDI, R1, ANY, 999),
                 new Word(Opcode.STD, R1, ANY, 10),
@@ -18,13 +22,6 @@ public class ProgMinimo implements Program {
                 new Word(Opcode.STD, R1, ANY, 13),
                 new Word(Opcode.STD, R1, ANY, 14),
                 Word.stop(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord(),
-                Word.emptyWord()
         };
     }
 }
