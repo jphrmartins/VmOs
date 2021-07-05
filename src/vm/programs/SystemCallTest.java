@@ -7,7 +7,7 @@ import static vm.CPU.Register.*;
 
 public class SystemCallTest extends Program {
     public SystemCallTest() {
-        super(1);
+        super("TrapTest", 1);
     }
 
     @Override

@@ -7,7 +7,7 @@ import static vm.CPU.Register.*;
 
 public class Fibo extends Program {
     public Fibo() {
-        super(6);
+        super("Fibo", 6);
     }
 
     @Override

@@ -10,7 +10,7 @@ import vm.memory.PCB;
 import java.util.Optional;
 import java.util.Set;
 
-public class CPU {
+public class CPU extends Thread {
     private static final Integer REGISTER_LENGTH = 9;
     private int programCounter;             // ... composto de program counter,
     private int clockCycle;
@@ -65,8 +65,9 @@ public class CPU {
         this.programCounter++;
     }
 
+    @Override
     public void run() {        // execucao da vm.CPU supoe que o contexto da vm.CPU, vide acima, esta devidamente setado
-        // instruction register,
+        // instruction register
         Word instruction;
         while (true) { // ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
             SystemInterrupt interrupt;
@@ -91,7 +92,7 @@ public class CPU {
             }
             if (clockCycle % 5 == 0) {
                 systemOperational.handleProgramChange(this);
-           }
+            }
             clockCycle++;
         }
     }

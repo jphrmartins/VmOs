@@ -8,7 +8,7 @@ import static vm.CPU.Register.R1;
 
 public class InterruptTest extends Program {
     public InterruptTest() {
-        super(2);
+        super("Interrupt", 2);
     }
 
     @Override

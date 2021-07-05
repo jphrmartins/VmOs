@@ -7,7 +7,7 @@ import static vm.CPU.Register.*;
 
 public class BubbleSort extends Program {
     public BubbleSort() {
-        super(6);
+        super("BubbleSort", 6);
     }
 
     @Override

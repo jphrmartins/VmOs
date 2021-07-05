@@ -7,7 +7,7 @@ import static vm.CPU.Register.*;
 
 public class Factorial extends Program {
     public Factorial() {
-        super(5);
+        super("Factorial", 5);
     }
 
     @Override

@@ -6,8 +6,10 @@ import java.util.Arrays;
 
 abstract public class Program {
     private final Integer framesNeeded;
+    private final String name;
 
-    public Program(Integer framesNeeded) {
+    public Program(String name, Integer framesNeeded) {
+        this.name = name;
         this.framesNeeded = framesNeeded;
     }
 
@@ -16,6 +18,10 @@ abstract public class Program {
         Word[] fullProgramSize = Arrays.copyOf(programWords, framesNeeded * wordPerFrame);
         Arrays.fill(fullProgramSize, programWords.length, fullProgramSize.length, Word.emptyWord());
         return fullProgramSize;
+    }
+
+    public String getName() {
+        return name;
     }
 
     protected abstract Word[] loadProgramWords();

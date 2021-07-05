@@ -9,7 +9,7 @@ import vm.Word;
 public class ProgMinimo extends Program {
 
     public ProgMinimo() {
-        super(2);
+        super("ProgMinino", 2);
     }
 
     @Override

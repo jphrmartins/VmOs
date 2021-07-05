@@ -17,10 +17,12 @@ public class SystemOperational {
     private static final Integer FRAME_SIZE = 64;
     private final List<Frame> framesIndex;
     private final Integer wordsPerFrame;
-    public int tamMem;
-    public Word[] memory;
-    public CPU cpu;
-    public List<PCB> readyList;
+    private int tamMem;
+    private Word[] memory;
+    private CPU cpu;
+    private List<PCB> readyList;
+    private List<PCB> consoleRequestList;
+    private List<PCB> blockedList;
 
     public SystemOperational() {
         tamMem = 1024;
@@ -64,7 +66,7 @@ public class SystemOperational {
                 allocatedFrames[currentPage++] = frame.getFrameId();
             }
         }
-        PCB pcb = new PCB(program.getClass().getSimpleName(), allocatedFrames, wordsPerFrame);
+        PCB pcb = new PCB(program.getName(), allocatedFrames, wordsPerFrame);
         readyList.add(pcb);
         return Optional.of(pcb);
     }
@@ -101,6 +103,11 @@ public class SystemOperational {
         cpu.loadStateOf(nextPCB);
     }
 
+    public List<PCB> getConsoleRequestList() {
+        return consoleRequestList;
+    }
+
+    //Redo
     public void start() {
         int programs = readyList.size();
         for (int i = 0; i < programs || !readyList.isEmpty() ; i++) {
@@ -120,6 +127,17 @@ public class SystemOperational {
             }
             printWriter.close();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    p
+
+    public void interruptCpu() {
+        try {
+            cpu.interrupt();
+            cpu.wait();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
