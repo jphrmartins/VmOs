@@ -14,18 +14,21 @@ public class CPU extends Thread {
     private static final Integer REGISTER_LENGTH = 9;
     private int programCounter;             // ... composto de program counter,
     private int clockCycle;
-    private final SystemOperational systemOperational; //Pointer to the sysops
+    private int globalClock;
+    private final OperationalSystem operationalSystem; //Pointer to the sysops
     private int[] registries; //Registradores
     private final Word[] memory;   //vm.CPU acessa MEMORIA, guarda referencia 'm' a ela. memoria nao muda. ee sempre a mesma.
     private final Set<InstructionRule> instructionRules;
     private PCB currentPCB;
 
-    public CPU(SystemOperational systemOperational, Word[] memory, Set<InstructionRule> instructionRules) {     // ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
+    public CPU(OperationalSystem operationalSystem, Word[] memory, Set<InstructionRule> instructionRules) {// ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
+        super("CPUTHREAD");
         this.memory = memory;                // usa o atributo 'm' para acessar a memoria.
-        clockCycle = 1;
-        registries = new int[REGISTER_LENGTH];     // aloca o espaço dos registradores
+        this.clockCycle = 1;
+        this.globalClock = 1;
+        this.registries = new int[REGISTER_LENGTH];     // aloca o espaço dos registradores
         this.instructionRules = instructionRules;
-        this.systemOperational = systemOperational;
+        this.operationalSystem = operationalSystem;
     }
 
     public int[] getRegistries() {
@@ -45,8 +48,13 @@ public class CPU extends Thread {
         return currentPCB;
     }
 
-    public void setCurrentPCB(PCB pcb) {
-        loadStateOf(pcb);
+    public void cleanCurrentPCB() {
+        clockCycle = 1;
+        currentPCB = null;
+    }
+
+    public boolean isIdle() {
+        return currentPCB == null;
     }
 
     public void setContext(int pc) {  // no futuro esta funcao vai ter que ser
@@ -55,10 +63,6 @@ public class CPU extends Thread {
 
     public int getProgramCounter() {
         return programCounter;
-    }
-
-    public SystemOperational getSystemPointer() {
-        return this.systemOperational;
     }
 
     public void incrementPc() {
@@ -70,30 +74,43 @@ public class CPU extends Thread {
         // instruction register
         Word instruction;
         while (true) { // ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
-            SystemInterrupt interrupt;
-            Optional<Integer> programCounterPosition = currentPCB.getMemoryPosition(programCounter);
-            if (programCounter > memory.length) {
-                interrupt = new MemoryOutOfBoundsInterruption(programCounter, memory.length);
-            } else if (programCounterPosition.isEmpty()) {
-                interrupt = new ProgramOutOfBoundsInterruption(currentPCB, programCounter);
+            if (currentPCB != null) {
+                SystemInterrupt interrupt;
+                Optional<Integer> programCounterPosition = currentPCB.getMemoryPosition(programCounter);
+                if (programCounter > memory.length) {
+                    interrupt = new MemoryOutOfBoundsInterruption(programCounter, memory.length);
+                } else if (programCounterPosition.isEmpty()) {
+                    interrupt = new ProgramOutOfBoundsInterruption(currentPCB, programCounter);
+                } else {
+                    instruction = memory[programCounterPosition.get()];    // busca posicao da memoria apontada por pc, guarda em instruction
+                    interrupt = new InvalidRuleInterruption(instruction.getOpc());
+                    for (InstructionRule rule : instructionRules) {
+                        if (rule.shouldExecute(instruction.getOpc())) {
+                            interrupt = rule.executeRule(this, instruction);
+                            break;
+                        }
+                    }
+                }
+                if (interrupt != null) {
+                    operationalSystem.handleInterruption(interrupt);
+                }
+                if (clockCycle == 5 || currentPCB != null && currentPCB.isBlocked()) {
+                    clockCycle = 1;
+                    operationalSystem.handleProgramChange();
+                }
+                clockCycle++;
             } else {
-                instruction = memory[programCounterPosition.get()];    // busca posicao da memoria apontada por pc, guarda em instruction
-                interrupt = new InvalidRuleInterruption(instruction.getOpc());
-                for (InstructionRule rule : instructionRules) {
-                    if (rule.shouldExecute(instruction.getOpc())) {
-                        interrupt = rule.executeRule(this, instruction);
-                        break;
+                synchronized (this) {
+                    try {
+                        System.out.println("CURRENT STATE OF CPU SHOULD BE IDLE SINCE CURRENT_PCB IS NULL");
+                        wait();
+                        System.out.println("New Program input");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
             }
-            if (interrupt != null) {
-                boolean shouldHalt = systemOperational.handleInterruption(interrupt);
-                if (shouldHalt) break; // break sai do loop da cpu
-            }
-            if (clockCycle % 5 == 0) {
-                systemOperational.handleProgramChange(this);
-            }
-            clockCycle++;
+            globalClock++;
         }
     }
 

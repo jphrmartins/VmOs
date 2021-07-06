@@ -1,11 +1,9 @@
 package vm;// PUCRS - Escola Politécnica - Sistemas Operacionais
 
-import vm.memory.PCB;
 import vm.programs.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 /*
 @TODO
@@ -16,23 +14,17 @@ import java.util.Optional;
 - Carregar programas para a memoria lendo de um arquivo
  */
 public class Computer {
-    public SystemOperational systemOperational;
+    public OperationalSystem operationalSystem;
 
-    public Computer() {
-        systemOperational = new SystemOperational();
+    public Computer(List<Program> programs) throws InterruptedException {
+        operationalSystem = new OperationalSystem(programs);
     }
 
-    public static void main(String args[]) {
-        List<Program> programs = Arrays.asList(new Fibo(), new Factorial(), new BubbleSort(), new SystemCallTest(), new InterruptTest());
+    public static void main(String args[]) throws InterruptedException {
+        List<Program> programs = Arrays.asList(new ProgMinimo(), new Fibo(), new Factorial(), new BubbleSort(), new SystemCallTest(), new InterruptTest());
         //List<Program> programs = Arrays.asList(new Fibo());
-        Computer computer = new Computer();
-        programs.forEach(it -> {
-            Optional<PCB> pcb = computer.systemOperational.loadProgram(it);
-            if (pcb.isEmpty()) {
-                System.err.println("### Could not load program: " + it.getClass().getName() + " due less memory then required");
-            }
-        });
-        computer.systemOperational.start();
+        Computer computer = new Computer(programs);
+        computer.operationalSystem.start();
     }
 }
 

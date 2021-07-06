@@ -5,6 +5,6 @@ import vm.memory.PCB;
 
 public class ProgramOutOfBoundsInterruption extends HaltInterruption {
     public ProgramOutOfBoundsInterruption(PCB currentPCB, int registerValue) {
-        super("Memory Position: " + registerValue + " is not in program: " + currentPCB.getClass().getName() + " range");
+        super("Memory Position: " + registerValue + " is not in program: " + currentPCB.getProgramName() + " range");
     }
 }

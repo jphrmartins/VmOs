@@ -1,7 +1,7 @@
 package vm.interruptions;
 
-import vm.SystemOperational;
+import vm.OperationalSystem;
 
 public interface SystemInterrupt {
-    boolean handleInterrupt(SystemOperational systemOperational);
+    boolean handleInterrupt(OperationalSystem operationalSystem);
 }

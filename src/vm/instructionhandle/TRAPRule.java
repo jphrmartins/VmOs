@@ -5,7 +5,6 @@ import vm.InstructionRule;
 import vm.Opcode;
 import vm.Word;
 import vm.interruptions.SystemInterrupt;
-import vm.systemcall.SystemCallHandler;
 
 public class TRAPRule implements InstructionRule{
 
@@ -16,9 +15,9 @@ public class TRAPRule implements InstructionRule{
 
     @Override
     public SystemInterrupt executeRule(CPU cpu, Word instruction) {
-        SystemCallHandler handler = new SystemCallHandler();
         cpu.incrementPc();
-        return handler.call(cpu);
+        cpu.getCurrentPCB().setBlocked(true);
+        return null;
     }
     
 }

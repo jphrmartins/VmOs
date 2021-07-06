@@ -10,12 +10,14 @@ public class PCB {
     private final int pid;
     private final String programName;
     private final Integer pageSize;
+    private boolean blocked;
     private CPUState cpuState;
     private final int[] allocatedFrames;
 
     public PCB(String programName, int[] allocatedFrames, int pageSize) {
         this.pid = PCB_GLOBAL_PID++;
         this.programName = programName;
+        this.blocked = false;
         this.pageSize = pageSize;
         this.allocatedFrames = allocatedFrames;
     }
@@ -52,5 +54,17 @@ public class PCB {
         return cpuState != null
                 ? cpuState.getLastProgramCounter()
                 : 0;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked() {
+        this.blocked = true;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 }

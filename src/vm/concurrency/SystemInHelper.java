@@ -18,12 +18,12 @@ public class SystemInHelper {
         return INSTANCE;
     }
 
-    public boolean hasNext(String pattern) {
-        return scanner.hasNext(pattern);
+    public boolean hasNext() {
+        return scanner.hasNextLine();
     }
 
-    //Talvez fazer com que isso seja um semaforo, dar prioriedade para o console. Shell tenta da aquired
-    public synchronized String read() {
+    public synchronized String read(String previusMessage) {
+        System.out.print(previusMessage);
         return scanner.next();
     }
 }
