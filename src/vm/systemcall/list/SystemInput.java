@@ -4,6 +4,7 @@ import vm.concurrency.SystemInHelper;
 import vm.memory.CPUState;
 import vm.systemcall.SystemCall;
 
+
 public class SystemInput implements SystemCall {
 
     private final SystemInHelper systemInHelper;
@@ -19,7 +20,9 @@ public class SystemInput implements SystemCall {
 
     @Override
     public void executeCall(CPUState cpu) {
+        systemInHelper.acquire();
         String textNumber = systemInHelper.read("Insira um numero para preencher o registrador: ");
+        systemInHelper.release();
         int number = Integer.parseInt(textNumber);
         cpu.getRegisters()[8] = number;
     }

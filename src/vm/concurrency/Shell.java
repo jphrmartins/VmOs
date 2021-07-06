@@ -1,4 +1,4 @@
-package vm.concurrency.shell;
+package vm.concurrency;
 
 import vm.OperationalSystem;
 import vm.concurrency.SystemInHelper;
@@ -7,6 +7,7 @@ import vm.programs.Program;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Shell extends Thread {
     private final String programInputPattern;
@@ -27,15 +28,22 @@ public class Shell extends Thread {
         showProgramList();
         while (true) {
             if (systemInHelper.hasNext()) {
-                System.out.println("Shell has input to read");
                 String token = systemInHelper.read("");
                 if (token.matches(programInputPattern)) {
-                    System.out.println("Shell input is valid");
                     int option = Integer.parseInt(token.split("#")[1]);
                     if (option == 0) {
                         showProgramList();
                     } else if (option == -1) {
+                        System.out.println("Executing dump");
                         operationalSystem.dumpToFile();
+                        System.out.println("Dump will be found on MemoryDump.txt file");
+                    } else if (option == -2) {
+                        synchronized (operationalSystem) {
+                            operationalSystem.notify();
+                        }
+                    } else if (option == -3) {
+                        String programNames = getProgramNames();
+                        System.out.println("[ " + programNames + " ]");
                     } else if (option > 0 && option < programList.size()) {
                         Program program = programList.get(option - 1);
                         System.out.println("Program " + program.getName() + " is Loading");
@@ -51,10 +59,14 @@ public class Shell extends Thread {
         }
     }
 
+    private String getProgramNames() {
+        return operationalSystem.getReadyList().stream().map(PCB::getProgramName).collect(Collectors.joining(", "));
+    }
+
     private void showProgramList() {
         System.out.println("Escrava # + código para executar o comando desejado -> ex: #1");
         System.out.println("- #-3 para ver a lista a ser rodado");
-        System.out.println("- #-2 para começar a execuçaõ");
+        System.out.println("- #-2 para começar a execução");
         System.out.println("- #-1 para ver o dump");
         System.out.println("- #0 para ver a lista novamente");
         System.out.println("Lista de programas disponíveis: ");

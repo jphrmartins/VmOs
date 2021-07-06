@@ -12,6 +12,7 @@ public class Console extends Thread {
     private final OperationalSystem operationalSystem;
 
     public Console(List<SystemCall> systemCallers, OperationalSystem operationalSystem) {
+        super("Console Thread");
         this.systemCallers = systemCallers;
         this.operationalSystem = operationalSystem;
     }
@@ -33,6 +34,7 @@ public class Console extends Thread {
         for (SystemCall systemCall: systemCallers) {
             if (systemCall.shouldExecuteCall(option)) {
                 systemCall.executeCall(request.getCpuState());
+                break;
             }
         }
     }

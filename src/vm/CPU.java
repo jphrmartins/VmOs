@@ -22,7 +22,7 @@ public class CPU extends Thread {
     private PCB currentPCB;
 
     public CPU(OperationalSystem operationalSystem, Word[] memory, Set<InstructionRule> instructionRules) {// ref a MEMORIA e interrupt handler passada na criacao da vm.CPU
-        super("CPUTHREAD");
+        super("CPU THREAD");
         this.memory = memory;                // usa o atributo 'm' para acessar a memoria.
         this.clockCycle = 1;
         this.globalClock = 1;
@@ -102,7 +102,7 @@ public class CPU extends Thread {
             } else {
                 synchronized (this) {
                     try {
-                        System.out.println("CURRENT STATE OF CPU SHOULD BE IDLE SINCE CURRENT_PCB IS NULL");
+                        System.out.println("CURRENT STATE OF CPU SHOULD BE IDLE SINCE CURRENT_PCB IS NULL, will wait... Global clock: " + globalClock);
                         wait();
                         System.out.println("New Program input");
                     } catch (InterruptedException e) {

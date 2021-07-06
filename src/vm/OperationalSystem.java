@@ -1,7 +1,7 @@
 package vm;
 
 import vm.concurrency.Console;
-import vm.concurrency.shell.Shell;
+import vm.concurrency.Shell;
 import vm.instructionhandle.*;
 import vm.interruptions.SystemInterrupt;
 import vm.interruptions.list.ConsoleRequestResponseInterruption;
@@ -62,6 +62,10 @@ public class OperationalSystem {
         return cpu;
     }
 
+    public List<PCB> getReadyList() {
+        return new ArrayList<>(readyList);
+    }
+
     public List<PCB> getConsoleRequestList() {
         return consoleRequestList;
     }
@@ -113,6 +117,11 @@ public class OperationalSystem {
             cpu.cleanCurrentPCB();
         }
         this.interrupted = false;
+        if (!readyList.isEmpty()) {
+            synchronized (this) {
+                this.notify();
+            }
+        }
     }
 
     public void handleProgramChange() {
@@ -134,7 +143,6 @@ public class OperationalSystem {
     //Main Thread
     public void start() throws InterruptedException {
         while (true) {
-            System.out.println("Main thread is running");
             if (!readyList.isEmpty() && cpu.isIdle() && !this.isInterrupted()) {
                 System.out.println(Thread.currentThread().getName() + " thread Will add program o cpu state");
                 PCB pcb = readyList.remove(0);
